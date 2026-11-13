@@ -100,6 +100,14 @@ tr:last-child td{border-bottom:none}
 .scroll{overflow-x:auto}
 .pill{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:1px 8px;background:var(--surface-2);color:var(--text-2);margin-left:6px;font-variant-numeric:tabular-nums}
 .pill.p5{background:var(--sun);color:#14304a}
+.strip{font-size:15px;letter-spacing:2px;line-height:1.3;margin-top:4px;white-space:nowrap}
+.pill.star{background:color-mix(in oklab,var(--sun) 40%,var(--surface));color:var(--text)}
+.dist{display:flex;gap:2px;height:12px;flex:1;min-width:90px;max-width:170px}
+.dist i{display:block;height:100%}
+.dist i:first-child{border-radius:4px 0 0 4px}.dist i:last-child{border-radius:0 4px 4px 0}
+.legend-mini{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--text-2);margin:2px 0 8px}
+.legend-mini span{display:inline-flex;align-items:center;gap:4px}
+.legend-mini b{display:inline-block;width:10px;height:10px;border-radius:3px}
 .raw{font-variant-numeric:tabular-nums;font-weight:500}
 .absent{color:var(--muted);font-style:italic}
 .daynav{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
@@ -169,6 +177,20 @@ const D = Object.assign({csv:"", updatedAt:null, live:false}, window.DAILY_NERD|
 const GAMES = ["Farhike","City Angle","Travle"];
 const GAME_ICON = {"Farhike":"🏔️","City Angle":"🧭","Travle":"🗺️"};
 const POINTS = [5,3,2,1,0];
+const BONUS = 1; // punto extra per una partita perfetta
+const CATS = {
+  "Farhike":   [["⬛","Mancato","#2e3338",0],["⬜","Comune","#b4bac0",1],["🟩","Non comune","#3aa757",2],["🟦","Raro","#2f6fd6",3],["🟪","Sfuggente","#8b4fd1",4],["🟧","Pioniere","#ef8a1f",5]],
+  "City Angle":[["🟩","Al primo tentativo","#3aa757"],["🟨","Al secondo","#f2c230"],["🟧","Al terzo","#ef8a1f"],["🟥","Più tentativi","#d9402f"]],
+  "Travle":    [["✅","Perfetto","#12a150"],["🟩","Giusto","#8fd17e"],["🟧","Non necessario","#ef8a1f"],["🟥","Sbagliato","#d9402f"]]
+};
+const STAR_RULE = {"Farhike":"tutti e 5 i paesi trovati, nessun ⬛","City Angle":"3 città al primo tentativo, 🟩🟩🟩","Travle":"percorso perfetto, +0"};
+function strip(raw, g){
+  const set=CATS[g].map(c=>c[0]);
+  const t=raw.replace(/◻️|◻|🔲|🔳|▫️|⬜️/g,"⬜").replace(/✅️/g,"✅");
+  const arr=Array.from(t).filter(ch=>set.includes(ch));
+  const counts={}; arr.forEach(ch=>counts[ch]=(counts[ch]||0)+1);
+  return {arr, str:arr.join(""), counts};
+}
 const app = document.getElementById("app");
 
 /* ---------- theme ---------- */
@@ -229,8 +251,11 @@ const PARSE = {
     if(v==null){ const km=[...t.matchAll(/(\d{1,3}(?:[.,]\d+)?)\s*km/gi)].map(x=>parseFloat(x[1].replace(",","."))).filter(n=>n<500); if(km.length) v=Math.max(...km); }
     if(v==null){ const ns=numbers(t).filter(n=>n<=500); if(ns.length) v=Math.max(...ns); }
     if(v==null) return null;
-    const greens=(raw.match(/🟩/g)||[]).length;
-    return {score:v, show:fmt(v,1)+" km", sub: greens? `${greens} 🟩 su 5`:"", extra:{km:v, top: v>=450}};
+    const st=strip(raw,"Farhike");
+    const w=Object.fromEntries(CATS.Farhike.map(c=>[c[0],c[3]]));
+    const rarity=st.arr.reduce((a,ch)=>a+w[ch],0);
+    const star = st.arr.length>=5 && !st.counts["⬛"];
+    return {score:v+rarity/1000, show:fmt(v,1)+" km", strip:st.str, extra:{km:v, counts:st.counts, rarity, star}};
   },
   "City Angle"(raw){
     const t=raw.replace(/https?:\/\/\S+/gi," ");
@@ -242,7 +267,9 @@ const PARSE = {
     if(v==null||isNaN(v)) return null;
     const solved=sv?+sv[1]:null, guesses=gs?+gs[1]:null;
     const sub = guesses!=null? `${solved??"?"}/3 città in ${guesses} tentativi` : (ft? `${ft[1]}/5 al primo colpo`:"");
-    return {score:v, show:fmt(v)+" pts", sub, extra:{pts:v, solved, guesses, perfect: guesses===3&&solved===3}};
+    const st=strip(raw,"City Angle");
+    const star = (st.arr.length===3 && st.arr.every(c=>c==="🟩")) || (guesses===3&&solved===3);
+    return {score:v+(guesses!=null?(50-guesses)/1000:0), show:fmt(v)+" pts", sub, strip:st.str, extra:{pts:v, solved, guesses, counts:st.counts, star}};
   },
   "Travle"(raw){
     const t=raw.replace(/https?:\/\/\S+/gi," ").replace(/#travle\w*/gi," ").replace(/#\s*\d+/g," ");
@@ -256,7 +283,9 @@ const PARSE = {
     if(ok && extra==null) return null;
     const pen = ok ? extra + hints : 10 + (away||9)/100;
     const show = ok ? (extra===0?"Perfetto":"+"+extra) + (hints?` · ${hints}💡`:"") : "✗ "+(away!=null?away+" away":"non arrivato");
-    return {score:-pen, show, extra:{ok, extra, hints, away, pen, perfect: ok&&extra===0&&hints===0}};
+    const st=strip(raw,"Travle");
+    const wrong=st.counts["🟥"]||0, nn=st.counts["🟧"]||0;
+    return {score:-pen-wrong/100-nn/10000, show, strip:st.str, extra:{ok, extra, hints, away, pen, counts:st.counts, star: ok&&extra===0&&hints===0}};
   }
 };
 
@@ -281,12 +310,12 @@ function build(){
   }
   const dayList=Object.keys(days).filter(d=>GAMES.some(g=>days[d][g]&&Object.keys(days[d][g]).length)).sort();
   const M={players, days, dayList, bad, perDay:{}};
-  const S={}; players.forEach(p=>S[p]={points:0,dayWins:0,gameWins:0,podiums:0,played:0,daysPlayed:0,spoons:0,perGame:{},cum:[],winStreak:0,bestWinStreak:0,playStreak:0,bestPlayStreak:0,perfect:0,dayPts:[]});
-  players.forEach(p=>GAMES.forEach(g=>S[p].perGame[g]={n:0,sum:0,best:null,bestDay:null,wins:0,points:0,scores:[]}));
+  const S={}; players.forEach(p=>S[p]={points:0,dayWins:0,gameWins:0,podiums:0,played:0,daysPlayed:0,spoons:0,perGame:{},cum:[],winStreak:0,bestWinStreak:0,playStreak:0,bestPlayStreak:0,stars:0,dayPts:[]});
+  players.forEach(p=>GAMES.forEach(g=>S[p].perGame[g]={n:0,sum:0,best:null,bestDay:null,wins:0,points:0,scores:[],cats:{},stars:0}));
   let runW={}, runP={};
   for(const d of dayList){
-    const pd={games:{}, pts:{}, played:{}, winners:[], spoons:[]};
-    players.forEach(p=>{pd.pts[p]=0; pd.played[p]=0;});
+    const pd={games:{}, pts:{}, played:{}, stars:{}, winners:[], spoons:[]};
+    players.forEach(p=>{pd.pts[p]=0; pd.played[p]=0; pd.stars[p]=0;});
     for(const g of GAMES){
       const res=(days[d][g])||{};
       const list=players.filter(p=>res[p]).sort((a,b)=>res[b].score-res[a].score);
@@ -294,7 +323,7 @@ function build(){
       list.forEach((p,i)=>{ const first=list.findIndex(q=>res[q].score===res[p].score); ranks[p]=first+1; });
       pd.games[g]={res,ranks,order:list};
       list.forEach(p=>{
-        const pts=POINTS[ranks[p]-1]||0; pd.pts[p]+=pts; pd.played[p]++;
+        const star=!!res[p].extra.star; const pts=(POINTS[ranks[p]-1]||0)+(star?BONUS:0); pd.pts[p]+=pts; pd.played[p]++; if(star) pd.stars[p]++;
         const s=S[p], pg=s.perGame[g]; s.played++; pg.n++; pg.points+=pts;
         const val = g==="Travle"? res[p].extra.pen : res[p].score;
         pg.scores.push(val); pg.sum+=val;
@@ -302,7 +331,8 @@ function build(){
         if(better){pg.best=val; pg.bestDay=d; pg.bestShow=res[p].show;}
         if(ranks[p]===1 && list.length>1){ s.gameWins++; pg.wins++; }
         if(ranks[p]<=3 && list.length>1) s.podiums++;
-        if(res[p].extra.perfect || (g==="Farhike"&&res[p].extra.top)) s.perfect++;
+        if(star){ s.stars++; pg.stars++; }
+        const cc=res[p].extra.counts||{}; for(const k in cc) pg.cats[k]=(pg.cats[k]||0)+cc[k];
       });
     }
     const active=players.filter(p=>pd.played[p]>0);
@@ -422,7 +452,7 @@ function heroSection(){
       el("p",{class:"kicker"}, `Giorno ${M.dayList.length}, ${dLong(last)}`),
       el("p",{class:"hero-title"}, pd.winners.length>1? "In vetta a pari merito":"In vetta oggi"),
       el("div",{class:"hero-name"}, pd.winners.join(" & ")||"—"),
-      el("p",{class:"hero-note"}, pd.winners.length? `${pd.pts[pd.winners[0]]} punti su 15 👑`:""),
+      el("p",{class:"hero-note"}, pd.winners.length? `${pd.pts[pd.winners[0]]} punti 👑`+(pd.stars[pd.winners[0]]?` con ${pd.stars[pd.winners[0]]} ⭐`:""):""),
       el("div",{class:"markers"},
         marker("🥄","Cucchiaio di legno", pd.spoons.length? whoList(pd.spoons):"Oggi nessuno"),
         marker("🏆","In testa alla generale", el("span",null, who(leader), ` con ${S[leader].points} pt`+(M.ranking[1]&&gap? `, +${gap} su ${M.ranking[1]}`:""))),
@@ -466,7 +496,9 @@ function daySection(){
       const G=pd.games[g], r=G.res[p];
       if(!r){ tr.append(el("td",{class:"absent"},"non giocato")); return; }
       const pts=POINTS[G.ranks[p]-1]||0;
-      tr.append(el("td",null, el("span",{class:"raw"},r.show), el("span",{class:"pill"+(pts===5?" p5":"")},"+"+pts), r.sub? el("div",{class:"muted",style:"font-size:12px"},r.sub):null));
+      tr.append(el("td",null, el("span",{class:"raw"},r.show), el("span",{class:"pill"+(pts===5?" p5":"")},"+"+pts), r.extra.star? el("span",{class:"pill star",title:"Partita perfetta: "+STAR_RULE[g]},"⭐+"+BONUS):null,
+        r.strip? el("div",{class:"strip","aria-label":"Esito per tappa"},r.strip):null,
+        r.sub? el("div",{class:"muted",style:"font-size:12px"},r.sub):null));
     });
     tr.append(el("td",{class:"num"}, el("b",{style:"font-size:18px"},pd.played[p]?pd.pts[p]:"—")));
     tb.append(tr);
@@ -560,12 +592,19 @@ function gamesSection(){
     return el("div",{class:"card game-card",id:"gioco-"+g.replace(/\s/g,"-").toLowerCase()},
       el("h3",null,GAME_ICON[g]+" "+g),
       rec? el("div",{class:"record"}, el("div",{class:"muted",style:"font-size:13px"},"Record"), el("div",{class:"big"},rec.show), el("div",null, who(rec.p), el("span",{class:"muted"}," il "+dShort(rec.d)))) : null,
-      ...ps.map(p=>el("div",{class:"stat-row"}, who(p), el("span",null, el("span",{class:"muted"},"media "+avgShow(p)+" · "), el("b",null,S[p].perGame[g].points+" pt"), el("span",{class:"muted"}, S[p].perGame[g].wins? ` · ${S[p].perGame[g].wins}🥇`:"")))),
+      ps.length? el("div",{class:"legend-mini"}, ...CATS[g].map(c=>el("span",null, el("b",{style:`background:${c[2]}`}), c[1]))) : null,
+      ...ps.map(p=>{ const pg=S[p].perGame[g]; const tot=CATS[g].reduce((a,c)=>a+(pg.cats[c[0]]||0),0);
+        const dist=el("div",{class:"dist",role:"img","aria-label":CATS[g].filter(c=>pg.cats[c[0]]).map(c=>`${c[1]}: ${pg.cats[c[0]]}`).join(", ")||"nessun dettaglio"},
+          ...CATS[g].filter(c=>pg.cats[c[0]]).map(c=>el("i",{style:`flex:${pg.cats[c[0]]};background:${c[2]}`,title:`${c[0]} ${c[1]}: ${pg.cats[c[0]]}`})));
+        return el("div",{class:"stat-row",style:"flex-direction:column;gap:6px"},
+          el("div",{style:"display:flex;justify-content:space-between;gap:10px"}, who(p), el("span",null, el("b",null,pg.points+" pt"), el("span",{class:"muted"}, (pg.wins? ` · ${pg.wins}🥇`:"")+(pg.stars? ` · ${pg.stars}⭐`:"")))),
+          el("div",{style:"display:flex;align-items:center;gap:10px"}, tot? dist : el("span",{class:"muted",style:"font-size:12px"},"senza quadratini"), el("span",{class:"muted",style:"font-size:12px;white-space:nowrap"},"media "+avgShow(p))));
+      }),
       !ps.length? el("div",{class:"muted"},"Nessun risultato ancora"):null,
-      lower&&ps.length? el("div",{class:"muted",style:"font-size:12px;margin-top:8px"},"Media = tentativi in più rispetto al percorso minimo (+1 per ogni aiuto)"):null
+      el("div",{class:"muted",style:"font-size:12px;margin-top:8px"},"⭐ +1 punto: "+STAR_RULE[g]+(lower?". Media = tentativi in più del percorso minimo.":""))
     );
   });
-  return el("section",{id:"giochi"}, secHead("Gioco per gioco","Record, medie e punti per ciascun gioco"), el("div",{class:"grid g3"}, ...cards));
+  return el("section",{id:"giochi"}, secHead("Gioco per gioco","Record, punti e com'è andata tappa per tappa"), el("div",{class:"grid g3"}, ...cards));
 }
 
 function awardsSection(){
@@ -577,12 +616,12 @@ function awardsSection(){
     ["🧭","Bussola d'oro","miglior media a City Angle", best(p=>avgG(p,"City Angle")), v=>fmt(v,0)+" pts di media"],
     ["🗺️","Navigatore","meno tentativi in più a Travle", best(p=>avgG(p,"Travle"),-1), v=>"+"+fmt(v,1)+" di media"],
     ["🔥","Serie più lunga","giornate vinte di fila", best(p=>S[p].bestWinStreak), v=>v+" di fila"],
-    ["🎯","Colpi perfetti","Travle perfetto, City Angle con 3 città in 3 tentativi, Farhike ≥ 450 km", best(p=>S[p].perfect), v=>v+" colpi"],
-    ["📅","Stakanovista","giorni consecutivi con almeno un gioco", best(p=>S[p].bestPlayStreak), v=>v+" giorni"],
-    ["🥄","Collezionista di cucchiai","più ultimi posti di giornata", best(p=>S[p].spoons), v=>v+" cucchiai"],
+    ["⭐","Collezionista di stelle","partite perfette in tutti e tre i giochi", best(p=>S[p].stars), v=>v+(v===1?" stella":" stelle")],
+    ["🟧","Pioniere","più paesi trailblazer trovati a Farhike", best(p=>S[p].perGame["Farhike"].cats["🟧"]||0), v=>v+" 🟧"],
+    ["🥄","Collezionista di cucchiai","più ultimi posti di giornata", best(p=>S[p].spoons), v=>v+(v===1?" cucchiaio":" cucchiai")],
     ["🥈","Eterno secondo","più podi senza vincere il gioco", best(p=>S[p].podiums-S[p].gameWins), v=>v+" podi d'argento/bronzo"],
   ];
-  return el("section",{id:"premi"}, secHead("Premi speciali","Si aggiornano ogni sera"),
+  return el("section",{id:"premi"}, secHead("Premi speciali","Si aggiornano a ogni nuovo risultato"),
     el("div",{class:"badges"}, ...A.map(([ico,t,why,r,f])=>el("div",{class:"badge"}, el("div",{class:"ico","aria-hidden":"true"},ico),
       el("div",null, el("div",{class:"t"},t), el("div",{class:"who"}, r? whoList(r.ps):el("span",{class:"muted"},"In palio")), el("div",{class:"why"}, r? f(r.v)+", "+why : why))))));
 }
@@ -607,7 +646,9 @@ function rulesSection(){
     el("ul",{class:"rules"},
       el("li",null,"Per ogni gioco e ogni giorno si fa una classifica: 5 punti al primo, 3 al secondo, 2 al terzo, 1 al quarto (e 0 al quinto, se un giorno tornate in cinque). A pari merito, stessi punti."),
       el("li",null,"🏔️ Farhike: vince chi fa più km. 🧭 City Angle: vince chi fa più pts. 🗺️ Travle: vince chi fa meno tentativi in più (“+N”); ogni aiuto conta come un tentativo; chi non arriva è dietro a tutti."),
-      el("li",null,"La giornata la vince chi somma più punti sui tre giochi (massimo 15). Ultimo = cucchiaio di legno 🥄."),
+      el("li",null,"La giornata la vince chi somma più punti sui tre giochi (massimo 18, stelle comprese). Ultimo = cucchiaio di legno 🥄."),
+      el("li",null,"⭐ Partita perfetta, +1 punto: Farhike con tutti e 5 i paesi trovati (nessun ⬛), City Angle con 3 città al primo tentativo (🟩🟩🟩), Travle con +0."),
+      el("li",null,"A parità di punteggio decidono i quadratini: a Farhike vince chi ha trovato paesi più rari, a City Angle chi ha usato meno tentativi, a Travle chi ha fatto meno 🟥 e meno 🟧."),
       el("li",null,"Chi non gioca prende 0 per quel gioco."))));
 }
 
