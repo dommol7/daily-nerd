@@ -222,24 +222,29 @@ function numbers(t){ return [...t.matchAll(/\d+(?:[.,]\d+)?/g)].map(x=>parseFloa
 /* ---------- parsers: each returns {score (higher is better), show, extra:{}} or null ---------- */
 const PARSE = {
   "Farhike"(raw){
-    const t=raw.replace(/#\s*\d+/g," ").replace(/(expedition|spedizione|day|giorno|no\.?)\s*\d+/gi," ");
-    let km=[...t.matchAll(/(\d{1,3}(?:[.,]\d+)?)\s*km/gi)].map(x=>parseFloat(x[1].replace(",",".")));
-    let v = km.length? Math.max(...km) : null;
-    if(v==null){ const ns=numbers(t).filter(n=>n<=600); if(ns.length) v=Math.max(...ns); }
+    const t=raw.replace(/https?:\/\/\S+|\S+\.(com|earth)\S*/gi," ").replace(/#\s*\d+/g," ");
+    let v=null, m=t.match(/(\d+(?:[.,]\d+)?)\s*\/\s*500/);
+    if(m) v=parseFloat(m[1].replace(",","."));
+    if(v==null){ const km=[...t.matchAll(/(\d{1,3}(?:[.,]\d+)?)\s*km/gi)].map(x=>parseFloat(x[1].replace(",","."))).filter(n=>n<500); if(km.length) v=Math.max(...km); }
+    if(v==null){ const ns=numbers(t).filter(n=>n<=500); if(ns.length) v=Math.max(...ns); }
     if(v==null) return null;
-    return {score:v, show:fmt(v,1)+" km", extra:{km:v, top: v>=450}};
+    const greens=(raw.match(/🟩/g)||[]).length;
+    return {score:v, show:fmt(v,1)+" km", sub: greens? `${greens} 🟩 su 5`:"", extra:{km:v, top: v>=450}};
   },
   "City Angle"(raw){
-    let v=null; const m=raw.match(/(\d[\d.,\s]*)\s*pts?\b/i);
+    const t=raw.replace(/https?:\/\/\S+/gi," ");
+    let v=null; const m=t.match(/(\d[\d.,\s]*)\s*pts?\b/i);
     if(m) v=parseInt(m[1].replace(/\D/g,""),10);
-    const ft=raw.match(/(\d)\s*\/\s*5\s*first/i), co=raw.match(/(\d)\s*\/\s*5\s*correct/i);
-    if(v==null){ const ns=numbers(raw.replace(/\d\s*\/\s*5/g," ")); if(ns.length) v=Math.max(...ns); }
+    const sv=t.match(/solved\s+(?:all\s+)?(\d)/i), gs=t.match(/in\s+(\d+)\s+guess/i);
+    const ft=t.match(/(\d)\s*\/\s*5\s*first/i);
+    if(v==null){ const ns=numbers(t.replace(/\d\s*\/\s*5/g," ")); if(ns.length) v=Math.max(...ns); }
     if(v==null||isNaN(v)) return null;
-    const first=ft?+ft[1]:null, corr=co?+co[1]:null;
-    return {score:v, show:fmt(v)+" pts", sub: first!=null? `${first}/5 al primo colpo`+(corr!=null?` · ${corr}/5`:""):"", extra:{pts:v, first, corr, perfect:first===5}};
+    const solved=sv?+sv[1]:null, guesses=gs?+gs[1]:null;
+    const sub = guesses!=null? `${solved??"?"}/3 città in ${guesses} tentativi` : (ft? `${ft[1]}/5 al primo colpo`:"");
+    return {score:v, show:fmt(v)+" pts", sub, extra:{pts:v, solved, guesses, perfect: guesses===3&&solved===3}};
   },
   "Travle"(raw){
-    const t=raw.replace(/#travle\w*/gi," ").replace(/#\s*\d+/g," ");
+    const t=raw.replace(/https?:\/\/\S+/gi," ").replace(/#travle\w*/gi," ").replace(/#\s*\d+/g," ");
     const h=t.match(/(\d+)\s*(hint|aiut)/i); const hints=h?+h[1]:0;
     let ok=true, extra=null, away=null; let m;
     if((m=t.match(/(\d+)\s*away/i))){ ok=false; away=+m[1]; }
@@ -437,7 +442,7 @@ function standingsSection(){
       el("div",{class:"rank"}, rk),
       el("div",null,
         el("div",{class:"who-line"}, who(p), s.winStreak>1? el("span",{class:"pill"},`🔥 ${s.winStreak}`):null),
-        el("div",{class:"stats"}, `${s.dayWins} giornate vinte, ${s.gameWins} giochi vinti, media ${fmt(avg,1)} al giorno, presente ${s.daysPlayed} su ${M.dayList.length}`),
+        el("div",{class:"stats"}, `${s.dayWins} ${s.dayWins===1?"giornata vinta":"giornate vinte"}, ${s.gameWins} ${s.gameWins===1?"gioco vinto":"giochi vinti"}, media ${fmt(avg,1)} al giorno, presente ${s.daysPlayed} su ${M.dayList.length}`),
         el("div",{class:"track"}, el("i",{style:`width:${(s.points/max*100).toFixed(1)}%;background:${color(p)}`}))),
       el("div",{class:"score"}, s.points, el("small",null,"punti"))
     ));
@@ -571,7 +576,7 @@ function awardsSection(){
     ["🧭","Bussola d'oro","miglior media a City Angle", best(p=>avgG(p,"City Angle")), v=>fmt(v,0)+" pts di media"],
     ["🗺️","Navigatore","meno tentativi in più a Travle", best(p=>avgG(p,"Travle"),-1), v=>"+"+fmt(v,1)+" di media"],
     ["🔥","Serie più lunga","giornate vinte di fila", best(p=>S[p].bestWinStreak), v=>v+" di fila"],
-    ["🎯","Colpi perfetti","Travle perfetto, City Angle 5/5 al primo colpo, Farhike ≥ 450 km", best(p=>S[p].perfect), v=>v+" colpi"],
+    ["🎯","Colpi perfetti","Travle perfetto, City Angle con 3 città in 3 tentativi, Farhike ≥ 450 km", best(p=>S[p].perfect), v=>v+" colpi"],
     ["📅","Stakanovista","giorni consecutivi con almeno un gioco", best(p=>S[p].bestPlayStreak), v=>v+" giorni"],
     ["🥄","Collezionista di cucchiai","più ultimi posti di giornata", best(p=>S[p].spoons), v=>v+" cucchiai"],
     ["🥈","Eterno secondo","più podi senza vincere il gioco", best(p=>S[p].podiums-S[p].gameWins), v=>v+" podi d'argento/bronzo"],
