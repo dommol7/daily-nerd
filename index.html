@@ -164,7 +164,8 @@ footer{margin-top:40px;color:var(--muted);font-size:13px}
 <script>
 (function(){
 "use strict";
-const D = window.DAILY_NERD || {csv:"", updatedAt:null};
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmiFxOJURZkrlf0l-iiYlmR250a3o4j615VwaU4HiNKCLHbEneJNCRdhWLd4ul6zw1X_gud7L2nfaW/pub?gid=854778667&single=true&output=csv"; // link "Pubblica sul web" dello sheet, formato CSV
+const D = Object.assign({csv:"", updatedAt:null, live:false}, window.DAILY_NERD||{});
 const GAMES = ["Farhike","City Angle","Travle"];
 const GAME_ICON = {"Farhike":"🏔️","City Angle":"🧭","Travle":"🗺️"};
 const POINTS = [5,3,2,1,0];
@@ -341,7 +342,7 @@ function render(){
   const chips=document.getElementById("chips"); chips.innerHTML="";
   const n=M.dayList.length;
   chips.append(el("span",{class:"chip"},n? `Giorno ${n}`:"Giorno 1"), el("span",{class:"chip"},`${M.players.length} sfidanti`));
-  if(D.updatedAt){ const u=new Date(D.updatedAt); chips.append(el("span",{class:"chip"},"Aggiornata "+u.toLocaleString("it-IT",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}))); }
+  if(D.updatedAt){ const u=new Date(D.updatedAt); chips.append(el("span",{class:"chip"},(D.live?"🟢 Dal vivo, ":"Aggiornata ")+u.toLocaleString("it-IT",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}))); }
   if(!n){
     app.append(el("div",{class:"card empty"},
       el("div",{class:"big"},"Si parte!"),
@@ -611,6 +612,12 @@ function rulesSection(){
 }
 
 render();
+if(SHEET_CSV_URL){
+  fetch(SHEET_CSV_URL+(SHEET_CSV_URL.includes("?")?"&":"?")+"t="+Date.now(),{cache:"no-store"})
+    .then(r=>{ if(!r.ok) throw new Error(r.status); return r.text(); })
+    .then(t=>{ if(/^\s*"?Giorno"?,/i.test(t)){ D.csv=t; D.updatedAt=new Date().toISOString(); D.live=true; render(); } })
+    .catch(()=>{});
+}
 let rt; addEventListener("resize",()=>{clearTimeout(rt); rt=setTimeout(()=>{const b=document.getElementById("trendchart"); if(b) drawTrend(b,b.querySelector(".tip"));},150);});
 })();
 </script>
