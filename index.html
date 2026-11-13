@@ -164,7 +164,7 @@ footer{margin-top:40px;color:var(--muted);font-size:13px}
 <script>
 (function(){
 "use strict";
-const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmiFxOJURZkrlf0l-iiYlmR250a3o4j615VwaU4HiNKCLHbEneJNCRdhWLd4ul6zw1X_gud7L2nfaW/pub?gid=854778667&single=true&output=csv"; // link "Pubblica sul web" dello sheet, formato CSV
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQGE_FnnI2V_FOY55s4-fTdM9xESB0zevdxlIjtZxYKOOXjcHdZkYMTLTuI9nVF3l9GATOPGHWNPnHE/pub?gid=1155406161&single=true&output=csv"; // link "Pubblica sul web" dello sheet, formato CSV
 const D = Object.assign({csv:"", updatedAt:null, live:false}, window.DAILY_NERD||{});
 const GAMES = ["Farhike","City Angle","Travle"];
 const GAME_ICON = {"Farhike":"🏔️","City Angle":"🧭","Travle":"🗺️"};
@@ -358,7 +358,7 @@ function render(){
   app.append(rulesSection());
   foot();
 }
-function foot(){ document.getElementById("foot").textContent="I dati arrivano dallo sheet “Daily Ne(r)d”, aggiornati ogni sera. Punti per ogni gioco: 5-3-2-1."; }
+function foot(){ document.getElementById("foot").textContent="I dati arrivano dal vivo dallo sheet “Daily Ne(r)d”. Punti per ogni gioco: 5-3-2-1."; }
 
 const NS="http://www.w3.org/2000/svg";
 function svgEl(t,a){const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); return e;}
