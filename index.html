@@ -5,115 +5,154 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Daily Ne(r)d</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Figtree:wght@400;500;600;700&display=swap">
 <style>
 :root{
   color-scheme: light;
-  --bg:#f4f3ef; --surface:#fcfcfb; --surface-2:#efede7; --border:#e2e0d8;
-  --text:#0b0b0b; --text-2:#52514e; --muted:#8a8984;
-  --gold:#b98200; --accent:#2a78d6;
+  --bg:#e3ece4; --surface:#f7faf6; --surface-2:#e9f1ea; --sea:#cfe2e8; --border:rgba(20,48,74,.14);
+  --text:#14304a; --text-2:#46607a; --muted:#7a8f9f;
+  --route:#d4412f; --gold:#c98a00; --sun:#f2b630; --contour:rgba(20,48,74,.11);
   --p0:#2a78d6; --p1:#eb6834; --p2:#1baf7a; --p3:#eda100; --p4:#e87ba4;
-  --grid:#e6e4dd;
+  --grid:rgba(20,48,74,.1); --snow:#ffffff;
 }
 @media (prefers-color-scheme: dark){
   :root:where(:not([data-theme="light"])){
     color-scheme: dark;
-    --bg:#121211; --surface:#1a1a19; --surface-2:#232321; --border:#2f2f2c;
-    --text:#f0efec; --text-2:#c3c2b7; --muted:#8d8c85;
-    --gold:#f2b632; --accent:#3987e5;
+    --bg:#0e1f2e; --surface:#142a3d; --surface-2:#1a3349; --sea:#173a52; --border:rgba(234,241,244,.12);
+    --text:#eaf1f4; --text-2:#b4c4cf; --muted:#7f95a5;
+    --route:#ff6b57; --gold:#f5c04a; --sun:#f5c04a; --contour:rgba(234,241,244,.07);
     --p0:#3987e5; --p1:#d95926; --p2:#199e70; --p3:#c98500; --p4:#d55181;
-    --grid:#2a2a28;
+    --grid:rgba(234,241,244,.08); --snow:#e8eff3;
   }
 }
 :root[data-theme="dark"]{
   color-scheme: dark;
-  --bg:#121211; --surface:#1a1a19; --surface-2:#232321; --border:#2f2f2c;
-  --text:#f0efec; --text-2:#c3c2b7; --muted:#8d8c85;
-  --gold:#f2b632; --accent:#3987e5;
+  --bg:#0e1f2e; --surface:#142a3d; --surface-2:#1a3349; --sea:#173a52; --border:rgba(234,241,244,.12);
+  --text:#eaf1f4; --text-2:#b4c4cf; --muted:#7f95a5;
+  --route:#ff6b57; --gold:#f5c04a; --sun:#f5c04a; --contour:rgba(234,241,244,.07);
   --p0:#3987e5; --p1:#d95926; --p2:#199e70; --p3:#c98500; --p4:#d55181;
-  --grid:#2a2a28;
+  --grid:rgba(234,241,244,.08); --snow:#e8eff3;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1120px;margin:0 auto;padding:28px 18px 60px}
-h1,h2,h3,.big{font-family:"Space Grotesk",Inter,sans-serif}
-h1{font-size:clamp(30px,6vw,46px);margin:0;letter-spacing:-.02em;line-height:1}
-h2{font-size:20px;margin:0 0 14px;letter-spacing:-.01em}
-h3{font-size:15px;margin:0 0 8px}
-.sub{color:var(--text-2);margin-top:8px}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Figtree,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:26px 18px 64px}
+.disp,h1,h2,.big,.hero-name,.rank,.score,.dlabel{font-family:"Big Shoulders Display","Arial Narrow",sans-serif;font-weight:800;letter-spacing:.005em}
+h1{font-size:clamp(52px,11vw,104px);line-height:.85;margin:0}
+h1 .paren{color:var(--route)}
+h2{font-size:clamp(30px,5vw,40px);line-height:1;margin:0}
+h3{font-size:16px;margin:0 0 8px;font-weight:600}
+.sub{color:var(--text-2);margin:10px 0 0;max-width:46ch}
 .muted{color:var(--muted)}
-header{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
-.chips{display:flex;gap:8px;flex-wrap:wrap}
+header{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .chip{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:5px 12px;font-size:13px;color:var(--text-2)}
+button.chip{cursor:pointer;font:inherit;font-size:13px}
 .grid{display:grid;gap:14px}
-.g4{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
 .g3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .gday{grid-template-columns:minmax(0,2fr) minmax(260px,1fr)}
-@media (max-width:760px){.gday{grid-template-columns:1fr}.barcell{display:none}}
-.g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px}
-section{margin-top:26px}
-.hero .label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
-.hero .big{font-size:28px;font-weight:700;margin-top:6px;line-height:1.1}
-.hero .note{color:var(--text-2);font-size:13px;margin-top:6px}
-.hero.king{background:linear-gradient(135deg,color-mix(in oklab,var(--gold) 18%,var(--surface)),var(--surface))}
-.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:baseline}
+@media (max-width:760px){.gday{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+section{margin-top:44px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.sec-head p{margin:0;color:var(--text-2);font-size:14px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
 .name{font-weight:600;white-space:nowrap}
+:focus-visible{outline:2px solid var(--route);outline-offset:2px}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-radius:26px;background:var(--sea);margin-top:0;padding:26px 26px 0}
+.hero > svg.topo{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:10px 24px;align-items:end}
+@media (max-width:760px){.hero-grid{grid-template-columns:1fr}}
+.hero-text{padding-bottom:26px}
+.hero .kicker{margin:0;color:var(--text-2);font-weight:600}
+.hero-title{margin:6px 0 0;font:600 18px Figtree,sans-serif;color:var(--text-2)}
+.hero-name{font-size:clamp(56px,10vw,92px);line-height:.9;margin:4px 0 0}
+.hero-note{margin:8px 0 0;font-size:16px}
+.markers{display:grid;gap:10px;margin-top:22px}
+.marker{display:flex;gap:12px;align-items:center;background:var(--surface);border-radius:12px;padding:10px 14px;border:1px solid var(--border)}
+.marker .ico{font-size:22px;width:28px;text-align:center}
+.marker .lbl{font-size:13px;color:var(--text-2)}
+.marker .val{font-weight:600}
+.podium svg{display:block;width:100%;height:auto}
+
+/* leaderboard */
+.board{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.row{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:4px 14px;align-items:center;padding:14px 18px;border-top:1px solid var(--border)}
+.row:first-child{border-top:none}
+.row.first{background:linear-gradient(90deg,color-mix(in oklab,var(--sun) 22%,transparent),transparent 70%)}
+.rank{font-size:44px;line-height:1;color:var(--muted);text-align:center}
+.row.first .rank{color:var(--gold)}
+.who-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.who-line .name{font-size:18px}
+.stats{font-size:13px;color:var(--text-2);margin-top:2px}
+.track{height:8px;background:var(--surface-2);border-radius:4px;margin-top:8px;overflow:hidden}
+.track > i{display:block;height:100%;border-radius:0 4px 4px 0}
+.score{font-size:46px;line-height:1;text-align:right}
+.score small{display:block;font:500 12px Figtree;color:var(--muted);text-align:right}
+
 table{width:100%;border-collapse:collapse}
-th,td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--border);vertical-align:middle}
-th{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+th,td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--border);vertical-align:middle}
+th{font-size:13px;color:var(--text-2);font-weight:600}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 tr:last-child td{border-bottom:none}
 .scroll{overflow-x:auto}
-.barcell{width:38%;min-width:110px}
-.bar{height:10px;border-radius:0 4px 4px 0;min-width:2px}
-.medal{font-size:18px;width:28px;text-align:center}
-.pill{display:inline-block;font-size:12px;font-weight:600;border-radius:999px;padding:1px 8px;background:var(--surface-2);color:var(--text-2);margin-left:6px;font-variant-numeric:tabular-nums}
-.pill.p5{background:color-mix(in oklab,var(--gold) 28%,var(--surface));color:var(--text)}
-.raw{font-variant-numeric:tabular-nums}
-.absent{color:var(--muted)}
+.pill{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:1px 8px;background:var(--surface-2);color:var(--text-2);margin-left:6px;font-variant-numeric:tabular-nums}
+.pill.p5{background:var(--sun);color:#14304a}
+.raw{font-variant-numeric:tabular-nums;font-weight:500}
+.absent{color:var(--muted);font-style:italic}
 .daynav{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-.daynav button,.btn{font:inherit;background:var(--surface-2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:6px 12px;cursor:pointer}
-.daynav button:disabled{opacity:.4;cursor:default}
-.daynav .dlabel{font-family:"Space Grotesk";font-weight:700;font-size:18px;min-width:180px}
-.cal{display:flex;flex-wrap:wrap;gap:6px}
-.cal button{font:600 12px Inter;width:42px;height:46px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0}
-.cal button .d{font-size:10px;color:var(--muted);font-weight:500}
-.cal button.sel{outline:2px solid var(--text);outline-offset:1px}
-.cal button .w{width:18px;height:18px;border-radius:50%;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.daynav button,.btn{font:inherit;font-weight:600;background:var(--surface-2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:6px 14px;cursor:pointer}
+.btn.primary{background:var(--route);color:#fff;border-color:transparent}
+.daynav button:disabled{opacity:.35;cursor:default}
+.daynav .dlabel{font-size:26px;min-width:190px}
+.ticket{background:var(--surface);border:1px dashed color-mix(in oklab,var(--text) 35%,transparent);border-radius:14px;padding:18px;position:relative}
+.share{white-space:pre-wrap;font:14px/1.55 Figtree,sans-serif;background:var(--surface-2);border-radius:10px;padding:12px 14px;margin:10px 0 12px}
+.cal{display:flex;flex-wrap:wrap;gap:8px}
+.cal button{font:600 12px Figtree;width:46px;height:52px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0}
+.cal button .d{font-size:11px;color:var(--muted);font-weight:500}
+.cal button.sel{border:2px solid var(--route)}
+.cal button .w{width:22px;height:22px;border-radius:50%;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;font-weight:800}
 .chart{position:relative}
 .chart svg{display:block;width:100%;overflow:visible}
-.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 10px;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.12);min-width:150px;display:none;z-index:5}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 10px;font-size:13px;box-shadow:0 8px 24px rgba(20,48,74,.18);min-width:150px;display:none;z-index:5}
 .tip .t{font-weight:600;margin-bottom:4px}
 .tip .r{display:flex;justify-content:space-between;gap:14px;font-variant-numeric:tabular-nums}
 .legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--text-2);margin-bottom:10px}
-.award{display:flex;gap:12px;align-items:flex-start}
-.award .ico{font-size:26px;line-height:1}
-.award .who{font-weight:600;margin-top:2px}
-.award .why{font-size:13px;color:var(--text-2)}
+.game-card{border-top:5px solid var(--route)}
+.game-card h3{font-family:"Big Shoulders Display","Arial Narrow",sans-serif;font-size:28px;font-weight:800;margin:0 0 6px}
+.record{background:var(--surface-2);border-radius:10px;padding:10px 12px;margin:6px 0 10px}
+.record .big{font-size:30px;line-height:1}
+.stat-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);gap:10px;font-size:14px}
+.stat-row:last-child{border-bottom:none}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.badge{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--border)}
+.badge .ico{flex:none;width:48px;height:48px;border-radius:50%;background:var(--sea);display:flex;align-items:center;justify-content:center;font-size:24px}
+.badge .t{font-weight:700}
+.badge .who{margin-top:2px}
+.badge .why{font-size:13px;color:var(--text-2);margin-top:2px}
 .h2h td,.h2h th{text-align:center;font-variant-numeric:tabular-nums}
 .h2h td.self{color:var(--muted)}
-.h2h td.win{font-weight:700}
-.empty{padding:30px;text-align:center;color:var(--text-2)}
-.empty .big{font-size:24px;color:var(--text);margin-bottom:6px}
+.h2h td.win{font-weight:800;color:var(--route)}
+.empty{padding:34px;text-align:center;color:var(--text-2)}
+.empty .big{font-size:44px;color:var(--text);margin-bottom:6px}
+.warn{border-left:5px solid var(--sun)}
 .warn li{margin:4px 0}
 .warn code{background:var(--surface-2);padding:1px 6px;border-radius:6px;font-size:12px;white-space:pre-wrap;word-break:break-word}
-.share{white-space:pre-wrap;font:13px/1.5 ui-monospace,Menlo,monospace;background:var(--surface-2);border-radius:10px;padding:12px;margin:10px 0}
-.rules li{margin:4px 0;color:var(--text-2)}
-.stat-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);gap:10px}
-.stat-row:last-child{border-bottom:none}
-.toggle{position:fixed;right:14px;bottom:14px}
-footer{margin-top:34px;color:var(--muted);font-size:12px}
+.rules li{margin:6px 0;color:var(--text-2)}
+footer{margin-top:40px;color:var(--muted);font-size:13px}
+@media (max-width:520px){.rank{font-size:34px}.score{font-size:36px}.row{grid-template-columns:40px minmax(0,1fr) auto;padding:12px 14px}.hero{padding:20px 18px 0}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <div>
-      <h1>Daily Ne(r)d 🌍</h1>
-      <div class="sub">Farhike · City Angle · Travle: chi è il vero nerd della geografia?</div>
+      <h1>Daily Ne<span class="paren">(</span>r<span class="paren">)</span>d</h1>
+      <p class="sub">Farhike, City Angle e Travle, ogni giorno. Cinque amici, una sola mappa da conquistare.</p>
     </div>
-    <div class="chips"><span class="chips" id="chips"></span><button class="chip" id="themeBtn" title="Tema chiaro/scuro" style="cursor:pointer;font:inherit;font-size:13px">◐ Tema</button></div>
+    <div class="chips"><span class="chips" id="chips"></span><button class="chip" id="themeBtn" title="Tema chiaro/scuro" >◐ Tema</button></div>
   </header>
 
   <div id="app"></div>
@@ -300,7 +339,7 @@ function render(){
   if(D.updatedAt){ const u=new Date(D.updatedAt); chips.append(el("span",{class:"chip"},"Aggiornata "+u.toLocaleString("it-IT",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}))); }
   if(!n){
     app.append(el("div",{class:"card empty"},
-      el("div",{class:"big"},"🏁 Si parte!"),
+      el("div",{class:"big"},"Si parte!"),
       el("div",null,"Ancora nessun risultato nello sheet. Ognuno incolla nella propria cella il testo “Condividi” del gioco: la classifica si accende al prossimo aggiornamento."),
     ));
     if(M.bad.length) app.append(badSection());
@@ -315,50 +354,95 @@ function render(){
 }
 function foot(){ document.getElementById("foot").textContent="I dati arrivano dallo sheet “Daily Ne(r)d”, aggiornati ogni sera. Punteggi per giornata: 5-3-2-1-0 per gioco."; }
 
+const NS="http://www.w3.org/2000/svg";
+function svgEl(t,a){const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); return e;}
+function secHead(title,desc){ return el("div",{class:"sec-head"}, el("h2",null,title), desc? el("p",null,desc):null); }
+
+function topoSVG(seed){
+  const s=svgEl("svg",{class:"topo",viewBox:"0 0 1000 420",preserveAspectRatio:"xMidYMid slice","aria-hidden":"true"});
+  const centers=[[820,120,11],[180,380,9],[520,-40,7]];
+  centers.forEach(([cx,cy,n],ci)=>{
+    for(let k=1;k<=n;k++){
+      const r=k*34; let d="";
+      for(let i=0;i<=72;i++){
+        const a=i/72*Math.PI*2;
+        const rr=r*(1+0.16*Math.sin(3*a+seed+ci)+0.08*Math.sin(5*a+k*0.4+ci*2)+0.05*Math.cos(7*a+seed));
+        d+=(i?"L":"M")+(cx+rr*Math.cos(a)).toFixed(1)+","+(cy+rr*0.8*Math.sin(a)).toFixed(1);
+      }
+      s.append(svgEl("path",{d:d+"Z",fill:"none",stroke:"var(--contour)","stroke-width":k%4===0?2:1.2}));
+    }
+  });
+  return s;
+}
+
+function podiumSVG(pd){
+  const order=[...M.players].filter(p=>pd.played[p]).sort((a,b)=>pd.pts[b]-pd.pts[a]);
+  const slots=[{i:1,x:150,h:150},{i:0,x:290,h:225},{i:2,x:425,h:110}];
+  const W=560,H=340,base=H-6;
+  const s=svgEl("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Podio del giorno: "+order.slice(0,3).map(p=>p+" "+pd.pts[p]+" punti").join(", ")});
+  // back ridge
+  s.append(svgEl("path",{d:`M0,${base} L60,${base-70} L110,${base-40} L200,${base-95} L260,${base-60} L360,${base-120} L470,${base-55} L520,${base-80} L${W},${base-30} L${W},${base} Z`,fill:"var(--text)",opacity:".07"}));
+  const draw=sl=>{
+    const p=order[sl.i]; const x=sl.x,h=sl.h,w=h*1.25+60;
+    const col=p?`var(--p${M.players.indexOf(p)%5})`:"var(--muted)";
+    const pk=[x,base-h], L=[x-w/2,base], R=[x+w/2,base], sh1=[x-w*0.2,base-h*0.6], sh2=[x+w*0.24,base-h*0.52];
+    s.append(svgEl("path",{d:`M${L} L${sh1} L${pk} L${sh2} L${R} Z`,fill:col,stroke:"var(--sea)","stroke-width":3,"stroke-linejoin":"round",opacity:p?1:.35}));
+    // shade
+    s.append(svgEl("path",{d:`M${pk} L${sh2} L${R} L${x+w*0.05},${base} Z`,fill:"#000",opacity:".12"}));
+    // snow
+    const sy=base-h*0.74;
+    s.append(svgEl("path",{d:`M${pk} L${x+h*0.21},${sy} L${x+h*0.1},${sy-6} L${x},${sy+8} L${x-h*0.08},${sy-4} L${x-h*0.17},${sy+4} Z`,fill:"var(--snow)"}));
+    if(sl.i===0&&p){ s.append(svgEl("line",{x1:x,y1:base-h,x2:x,y2:base-h-34,stroke:"var(--text)","stroke-width":2.5,"stroke-linecap":"round"}));
+      s.append(svgEl("path",{d:`M${x},${base-h-34} L${x+24},${base-h-27} L${x},${base-h-20} Z`,fill:"var(--route)"})); }
+    const ty=base-h-(sl.i===0?46:14);
+    const t1=svgEl("text",{x,y:ty-20,"text-anchor":"middle","font-family":"Big Shoulders Display, Arial Narrow, sans-serif","font-weight":800,"font-size":sl.i===0?34:26,fill:"var(--text)"}); t1.textContent=p||"—"; s.append(t1);
+    const t2=svgEl("text",{x,y:ty,"text-anchor":"middle","font-family":"Figtree, sans-serif","font-weight":600,"font-size":14,fill:"var(--text-2)"}); t2.textContent=p? `${pd.pts[p]} pt`:""; s.append(t2);
+    const t3=svgEl("text",{x,y:base-16,"text-anchor":"middle","font-family":"Big Shoulders Display, Arial Narrow, sans-serif","font-weight":800,"font-size":30,fill:"#fff",opacity:".9"}); t3.textContent=sl.i+1; s.append(t3);
+  };
+  [slots[0],slots[2],slots[1]].forEach(draw);
+  return el("div",{class:"podium"},s);
+}
+
 function heroSection(){
-  const last=M.dayList[M.dayList.length-1], pd=M.perDay[last];
-  const leader=M.ranking[0], S=M.S;
+  const last=M.dayList[M.dayList.length-1], pd=M.perDay[last], S=M.S;
+  const leader=M.ranking[0];
   const gap = M.ranking[1]!=null ? S[leader].points - S[M.ranking[1]].points : 0;
   const streaker=[...M.players].sort((a,b)=>S[b].winStreak-S[a].winStreak)[0];
-  return el("section",{class:"grid g4",id:"hero"},
-    el("div",{class:"card hero king"}, el("div",{class:"label"},"👑 Re del giorno · "+dLong(last)),
-      el("div",{class:"big"}, whoList(pd.winners)),
-      el("div",{class:"note"}, pd.winners.length? `${pd.pts[pd.winners[0]]} punti su 15`:"")),
-    el("div",{class:"card hero"}, el("div",{class:"label"},"🥄 Cucchiaio di legno"),
-      el("div",{class:"big"}, whoList(pd.spoons)),
-      el("div",{class:"note"}, pd.spoons.length? `${pd.pts[pd.spoons[0]]} punti, si può solo salire`:"Oggi niente cucchiaio")),
-    el("div",{class:"card hero"}, el("div",{class:"label"},"🏆 In testa alla generale"),
-      el("div",{class:"big"}, who(leader)),
-      el("div",{class:"note"}, `${S[leader].points} punti`+(M.ranking[1]? ` · +${gap} su ${M.ranking[1]}`:""))),
-    el("div",{class:"card hero"}, el("div",{class:"label"},"🔥 Serie di vittorie"),
-      el("div",{class:"big"}, S[streaker].winStreak? who(streaker):el("span",{class:"muted"},"—")),
-      el("div",{class:"note"}, S[streaker].winStreak? `${S[streaker].winStreak} giorn${S[streaker].winStreak>1?"i":"o"} di fila al comando`:"Nessuna serie aperta"))
-  );
+  const ws=S[streaker].winStreak;
+  const marker=(ico,lbl,val)=>el("div",{class:"marker"}, el("span",{class:"ico","aria-hidden":"true"},ico), el("div",null, el("div",{class:"lbl"},lbl), el("div",{class:"val"},val)));
+  const panel=el("section",{class:"hero",id:"hero"}, topoSVG(M.dayList.length));
+  panel.append(el("div",{class:"hero-grid"},
+    el("div",{class:"hero-text"},
+      el("p",{class:"kicker"}, `Giorno ${M.dayList.length}, ${dLong(last)}`),
+      el("p",{class:"hero-title"}, pd.winners.length>1? "In vetta a pari merito":"In vetta oggi"),
+      el("div",{class:"hero-name"}, pd.winners.join(" & ")||"—"),
+      el("p",{class:"hero-note"}, pd.winners.length? `${pd.pts[pd.winners[0]]} punti su 15 👑`:""),
+      el("div",{class:"markers"},
+        marker("🥄","Cucchiaio di legno", pd.spoons.length? whoList(pd.spoons):"Oggi nessuno"),
+        marker("🏆","In testa alla generale", el("span",null, who(leader), ` con ${S[leader].points} pt`+(M.ranking[1]&&gap? `, +${gap} su ${M.ranking[1]}`:""))),
+        marker("🔥","Serie di vittorie", ws? el("span",null, who(streaker), ` da ${ws} giorn${ws>1?"i":"o"}`):"Nessuna serie aperta"))
+    ),
+    podiumSVG(pd)
+  ));
+  return panel;
 }
 
 function standingsSection(){
   const S=M.S, max=Math.max(1,...M.players.map(p=>S[p].points));
-  const medals=["🥇","🥈","🥉"];
-  const tb=el("tbody");
+  const board=el("div",{class:"board"});
   M.ranking.forEach((p,i)=>{
     const s=S[p], avg=s.daysPlayed? s.points/s.daysPlayed:0;
-    tb.append(el("tr",null,
-      el("td",{class:"medal"}, medals[i]||String(i+1)),
-      el("td",null, who(p)),
-      el("td",{class:"barcell"}, el("div",{class:"bar",style:`width:${(s.points/max*100).toFixed(1)}%;background:${color(p)}`})),
-      el("td",{class:"num"}, el("b",null,s.points)),
-      el("td",{class:"num"}, s.dayWins),
-      el("td",{class:"num"}, s.gameWins),
-      el("td",{class:"num"}, fmt(avg,1)),
-      el("td",{class:"num"}, `${s.daysPlayed}/${M.dayList.length}`)
+    const rk=M.ranking.findIndex(q=>S[q].points===s.points)+1;
+    board.append(el("div",{class:"row"+(rk===1?" first":"")},
+      el("div",{class:"rank"}, rk),
+      el("div",null,
+        el("div",{class:"who-line"}, who(p), s.winStreak>1? el("span",{class:"pill"},`🔥 ${s.winStreak}`):null),
+        el("div",{class:"stats"}, `${s.dayWins} giornate vinte, ${s.gameWins} giochi vinti, media ${fmt(avg,1)} al giorno, presente ${s.daysPlayed} su ${M.dayList.length}`),
+        el("div",{class:"track"}, el("i",{style:`width:${(s.points/max*100).toFixed(1)}%;background:${color(p)}`}))),
+      el("div",{class:"score"}, s.points, el("small",null,"punti"))
     ));
   });
-  return el("section",{id:"classifica"}, el("div",{class:"card"},
-    el("h2",null,"Classifica generale"),
-    el("div",{class:"scroll"}, el("table",null,
-      el("thead",null, el("tr",null, el("th"), el("th",null,"Nerd"), el("th",{class:"barcell"},""), el("th",{class:"num"},"Punti"), el("th",{class:"num"},"Giornate vinte"), el("th",{class:"num"},"Giochi vinti"), el("th",{class:"num"},"Media/giorno"), el("th",{class:"num"},"Presenze"))),
-      tb)))
-  );
+  return el("section",{id:"classifica"}, secHead("Classifica generale","Somma dei punti di tutte le giornate"), board);
 }
 
 function daySection(){
@@ -366,7 +450,7 @@ function daySection(){
   const go=k=>{ selDay=M.dayList[idx+k]; render(); document.getElementById("giornata").scrollIntoView({block:"nearest"}); };
   const nav=el("div",{class:"daynav"},
     el("button",{onclick:()=>go(-1), ...(idx<=0?{disabled:""}:{}) ,"aria-label":"Giorno precedente"},"←"),
-    el("span",{class:"dlabel"}, `Giorno ${idx+1} · ${dLong(selDay)}`),
+    el("span",{class:"dlabel"}, `Giorno ${idx+1}, ${dLong(selDay)}`),
     el("button",{onclick:()=>go(1), ...(idx>=M.dayList.length-1?{disabled:""}:{}),"aria-label":"Giorno successivo"},"→"));
   const order=[...M.players].sort((a,b)=>pd.pts[b]-pd.pts[a]);
   const tb=el("tbody");
@@ -378,30 +462,28 @@ function daySection(){
       const pts=POINTS[G.ranks[p]-1]||0;
       tr.append(el("td",null, el("span",{class:"raw"},r.show), el("span",{class:"pill"+(pts===5?" p5":"")},"+"+pts), r.sub? el("div",{class:"muted",style:"font-size:12px"},r.sub):null));
     });
-    tr.append(el("td",{class:"num"}, el("b",null,pd.played[p]?pd.pts[p]:"—")));
+    tr.append(el("td",{class:"num"}, el("b",{style:"font-size:18px"},pd.played[p]?pd.pts[p]:"—")));
     tb.append(tr);
   });
-  const share=el("div",{class:"share",id:"sharetext"}, shareText(selDay));
-  const copyBtn=el("button",{class:"btn",onclick:async()=>{ try{ await navigator.clipboard.writeText(shareText(selDay)); copyBtn.textContent="Copiato ✓"; }catch(e){ copyBtn.textContent="Copia non riuscita: seleziona il testo"; } }},"📋 Copia per WhatsApp");
-  // calendar
+  const copyBtn=el("button",{class:"btn primary",onclick:async()=>{ try{ await navigator.clipboard.writeText(shareText(selDay)); copyBtn.textContent="Copiato ✓"; }catch(e){ copyBtn.textContent="Seleziona il testo e copialo a mano"; } }},"Copia per WhatsApp");
   const cal=el("div",{class:"cal"});
-  M.dayList.forEach((d,i)=>{
+  M.dayList.forEach(d=>{
     const w=M.perDay[d].winners;
-    const b=el("button",{class:d===selDay?"sel":"",title:`${dLong(d)}: ${w.join(", ")}`,onclick:()=>{selDay=d;render();}},
+    cal.append(el("button",{class:d===selDay?"sel":"",title:`${dLong(d)}: ${w.join(", ")}`,"aria-label":`${dLong(d)}, vince ${w.join(" e ")}`,onclick:()=>{selDay=d;render();}},
       el("span",{class:"d"},dShort(d)),
-      w.length===1? el("span",{class:"w",style:`background:${color(w[0])}`},w[0][0]) : el("span",{class:"w",style:"background:var(--muted)"},w.length>1?"=":"·"));
-    cal.append(b);
+      w.length===1? el("span",{class:"w",style:`background:${color(w[0])}`},w[0][0]) : el("span",{class:"w",style:"background:var(--muted)"},w.length>1?"=":"·")));
   });
-  return el("section",{id:"giornata"},
+  return el("section",{id:"giornata"}, secHead("La giornata","Risultati e punti di ogni gioco"),
     el("div",{class:"grid gday"},
-      el("div",{class:"card"}, el("h2",null,"La giornata"), nav,
+      el("div",{class:"card"}, nav,
         el("div",{class:"scroll"}, el("table",null,
-          el("thead",null, el("tr",null, el("th",null,"Nerd"), ...GAMES.map(g=>el("th",null,GAME_ICON[g]+" "+g)), el("th",{class:"num"},"Tot"))), tb))),
-      el("div",{class:"card"}, el("h2",null,"Card del giorno"), share, copyBtn)
+          el("thead",null, el("tr",null, el("th",null,"Chi"), ...GAMES.map(g=>el("th",null,GAME_ICON[g]+" "+g)), el("th",{class:"num"},"Totale"))), tb))),
+      el("div",{class:"ticket"}, el("h3",null,"Il riassunto per il gruppo"), el("div",{class:"share"}, shareText(selDay)), copyBtn)
     ),
-    el("div",{class:"card",style:"margin-top:14px"}, el("h3",null,"Calendario dei re"), el("div",{class:"muted",style:"font-size:13px;margin-bottom:8px"},"Iniziale del vincitore di ogni giornata · tocca un giorno per aprirlo"), cal)
+    el("div",{style:"margin-top:18px"}, el("h3",null,"Calendario dei re"), el("p",{class:"muted",style:"font-size:13px;margin:0 0 10px"},"L'iniziale di chi ha vinto ogni giornata. Tocca un giorno per aprirlo."), cal)
   );
 }
+
 function shareText(d){
   const pd=M.perDay[d], idx=M.dayList.indexOf(d);
   const lines=[`🌍 Daily Ne(r)d · Giorno ${idx+1} (${dLong(d)})`,""];
@@ -419,7 +501,7 @@ function shareText(d){
 function trendSection(){
   const legend=el("div",{class:"legend"}, ...M.players.map(p=>el("span",null,swatch(p),p)));
   const box=el("div",{class:"chart",id:"trendchart"}); const tip=el("div",{class:"tip"}); box.append(tip);
-  const sec=el("section",{id:"andamento"}, el("div",{class:"card"}, el("h2",null,"Andamento dei punti"), el("div",{class:"muted",style:"font-size:13px;margin:-8px 0 10px"},"Punti accumulati giorno dopo giorno"), legend, box));
+  const sec=el("section",{id:"andamento"}, secHead("La scalata","Punti accumulati giorno dopo giorno"), el("div",{class:"card"}, legend, box));
   requestAnimationFrame(()=>drawTrend(box,tip));
   return sec;
 }
@@ -469,15 +551,15 @@ function gamesSection(){
     ps.sort((a,b)=> S[b].perGame[g].points-S[a].perGame[g].points || (lower? avg(a)-avg(b) : avg(b)-avg(a)));
     const rec = ps.length? ps.reduce((best,p)=>{ const v=S[p].perGame[g].best; return best==null||(lower? v<best.v : v>best.v)? {p,v,d:S[p].perGame[g].bestDay,show:S[p].perGame[g].bestShow}:best; },null):null;
     const avgShow=p=>{ const a=avg(p); return g==="Farhike"? fmt(a,0)+" km" : g==="City Angle"? fmt(a,0)+" pts" : "+"+fmt(a,1); };
-    return el("div",{class:"card",id:"gioco-"+g.replace(/\s/g,"-").toLowerCase()},
-      el("h2",null,GAME_ICON[g]+" "+g),
-      rec? el("div",{class:"stat-row"}, el("span",{class:"muted"},"Record"), el("span",null, who(rec.p), " ", el("b",null,rec.show), el("span",{class:"muted"}," · "+dShort(rec.d)))) : null,
+    return el("div",{class:"card game-card",id:"gioco-"+g.replace(/\s/g,"-").toLowerCase()},
+      el("h3",null,GAME_ICON[g]+" "+g),
+      rec? el("div",{class:"record"}, el("div",{class:"muted",style:"font-size:13px"},"Record"), el("div",{class:"big"},rec.show), el("div",null, who(rec.p), el("span",{class:"muted"}," il "+dShort(rec.d)))) : null,
       ...ps.map(p=>el("div",{class:"stat-row"}, who(p), el("span",null, el("span",{class:"muted"},"media "+avgShow(p)+" · "), el("b",null,S[p].perGame[g].points+" pt"), el("span",{class:"muted"}, S[p].perGame[g].wins? ` · ${S[p].perGame[g].wins}🥇`:"")))),
       !ps.length? el("div",{class:"muted"},"Nessun risultato ancora"):null,
       lower&&ps.length? el("div",{class:"muted",style:"font-size:12px;margin-top:8px"},"Media = tentativi in più rispetto al percorso minimo (+1 per ogni aiuto)"):null
     );
   });
-  return el("section",{id:"giochi"}, el("h2",null,"Gioco per gioco"), el("div",{class:"grid g3"}, ...cards));
+  return el("section",{id:"giochi"}, secHead("Gioco per gioco","Record, medie e punti per ciascun gioco"), el("div",{class:"grid g3"}, ...cards));
 }
 
 function awardsSection(){
@@ -494,9 +576,9 @@ function awardsSection(){
     ["🥄","Collezionista di cucchiai","più ultimi posti di giornata", best(p=>S[p].spoons), v=>v+" cucchiai"],
     ["🥈","Eterno secondo","più podi senza vincere il gioco", best(p=>S[p].podiums-S[p].gameWins), v=>v+" podi d'argento/bronzo"],
   ];
-  return el("section",{id:"premi"}, el("h2",null,"Premi speciali"),
-    el("div",{class:"grid g4"}, ...A.map(([ico,t,why,r,f])=>el("div",{class:"card award"}, el("div",{class:"ico"},ico),
-      el("div",null, el("div",{style:"font-weight:600"},t), el("div",{class:"who"}, r? whoList(r.ps):el("span",{class:"muted"},"in palio")), el("div",{class:"why"}, r? f(r.v)+" · "+why : why))))));
+  return el("section",{id:"premi"}, secHead("Premi speciali","Si aggiornano ogni sera"),
+    el("div",{class:"badges"}, ...A.map(([ico,t,why,r,f])=>el("div",{class:"badge"}, el("div",{class:"ico","aria-hidden":"true"},ico),
+      el("div",null, el("div",{class:"t"},t), el("div",{class:"who"}, r? whoList(r.ps):el("span",{class:"muted"},"In palio")), el("div",{class:"why"}, r? f(r.v)+", "+why : why))))));
 }
 
 function h2hSection(){
@@ -504,19 +586,18 @@ function h2hSection(){
   const tb=el("tbody");
   P.forEach(a=>{ tb.append(el("tr",null, el("th",{style:"text-align:left"},who(a)),
     ...P.map(b=> a===b? el("td",{class:"self"},"·") : el("td",{class: M.h2h[a][b]>M.h2h[b][a]?"win":""}, `${M.h2h[a][b]}–${M.h2h[b][a]}`)))); });
-  return el("section",{id:"testa-a-testa"}, el("div",{class:"card"}, el("h2",null,"Testa a testa"),
-    el("div",{class:"muted",style:"font-size:13px;margin:-8px 0 10px"},"Giornate in cui chi è nella riga ha fatto più punti di chi è nella colonna"),
+  return el("section",{id:"testa-a-testa"}, secHead("Testa a testa","Giornate vinte da chi è nella riga contro chi è nella colonna"), el("div",{class:"card"},
     el("div",{class:"scroll"}, el("table",{class:"h2h"}, el("thead",null, el("tr",null, el("th"), ...P.map(b=>el("th",null,b)))), tb))));
 }
 
 function badSection(){
-  return el("section",{id:"da-controllare"}, el("div",{class:"card warn"}, el("h2",null,"⚠️ Da controllare"),
+  return el("section",{id:"da-controllare"}, el("div",{class:"card warn"}, el("h3",null,"⚠️ Da controllare"),
     el("div",{class:"muted",style:"font-size:13px;margin-bottom:8px"},"Questi testi non sono stati riconosciuti e non contano: incollate il testo “Condividi” intero, o almeno il numero."),
     el("ul",null, ...M.bad.map(b=>el("li",null, el("b",null,b.player), ` · ${b.game} · ${dShort(b.day)}: `, el("code",null,b.raw.slice(0,160)))))));
 }
 
 function rulesSection(){
-  return el("section",{id:"regole"}, el("div",{class:"card"}, el("h2",null,"Come si contano i punti"),
+  return el("section",{id:"regole"}, el("div",{class:"card"}, el("h3",null,"Come si contano i punti"),
     el("ul",{class:"rules"},
       el("li",null,"Per ogni gioco e ogni giorno si fa una classifica: 5 punti al primo, 3 al secondo, 2 al terzo, 1 al quarto, 0 al quinto. A pari merito, stessi punti."),
       el("li",null,"🏔️ Farhike: vince chi fa più km. 🧭 City Angle: vince chi fa più pts. 🗺️ Travle: vince chi fa meno tentativi in più (“+N”); ogni aiuto conta come un tentativo; chi non arriva è dietro a tutti."),
