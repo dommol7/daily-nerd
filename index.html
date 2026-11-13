@@ -352,7 +352,7 @@ function render(){
   app.append(rulesSection());
   foot();
 }
-function foot(){ document.getElementById("foot").textContent="I dati arrivano dallo sheet “Daily Ne(r)d”, aggiornati ogni sera. Punteggi per giornata: 5-3-2-1-0 per gioco."; }
+function foot(){ document.getElementById("foot").textContent="I dati arrivano dallo sheet “Daily Ne(r)d”, aggiornati ogni sera. Punti per ogni gioco: 5-3-2-1."; }
 
 const NS="http://www.w3.org/2000/svg";
 function svgEl(t,a){const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); return e;}
@@ -599,7 +599,7 @@ function badSection(){
 function rulesSection(){
   return el("section",{id:"regole"}, el("div",{class:"card"}, el("h3",null,"Come si contano i punti"),
     el("ul",{class:"rules"},
-      el("li",null,"Per ogni gioco e ogni giorno si fa una classifica: 5 punti al primo, 3 al secondo, 2 al terzo, 1 al quarto, 0 al quinto. A pari merito, stessi punti."),
+      el("li",null,"Per ogni gioco e ogni giorno si fa una classifica: 5 punti al primo, 3 al secondo, 2 al terzo, 1 al quarto (e 0 al quinto, se un giorno tornate in cinque). A pari merito, stessi punti."),
       el("li",null,"🏔️ Farhike: vince chi fa più km. 🧭 City Angle: vince chi fa più pts. 🗺️ Travle: vince chi fa meno tentativi in più (“+N”); ogni aiuto conta come un tentativo; chi non arriva è dietro a tutti."),
       el("li",null,"La giornata la vince chi somma più punti sui tre giochi (massimo 15). Ultimo = cucchiaio di legno 🥄."),
       el("li",null,"Chi non gioca prende 0 per quel gioco."))));
