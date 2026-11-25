@@ -185,7 +185,10 @@ footer{margin-top:40px;color:var(--muted);font-size:13px}
 .seg{display:inline-flex;gap:2px;padding:3px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
 .seg button{font:600 13px Figtree,sans-serif;border:0;background:transparent;color:var(--text-2);padding:7px 12px;border-radius:9px;cursor:pointer}
 .seg button.on{background:var(--route);color:#fff}
-.months{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.months{grid-template-columns:1fr}
+.calwrap{grid-template-columns:minmax(0,1.3fr) minmax(280px,1fr);align-items:start;gap:24px}
+.calwrap section{margin-top:0}
+@media (max-width:860px){.calwrap{grid-template-columns:1fr}}
 .month h3{font-family:"Big Shoulders Display","Arial Narrow",sans-serif;font-size:26px;font-weight:800;margin-bottom:10px}
 .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 .cal-h{font-size:12px;color:var(--muted);text-align:center;font-weight:600}
@@ -427,6 +430,7 @@ function initials(p){ const caps=p.match(/[A-ZÀ-Ý]/g)||[]; return (caps.length
 const avatar = (p,cls="") => el("span",{class:"av "+cls,style:`background:${color(p)}`,"aria-hidden":"true"},initials(p));
 const who = p => el("span",{class:"name"},avatar(p),p);
 const whoList = ps => ps.length? el("span",{class:"wholist"}, ...ps.map(p=>who(p))) : el("span",{class:"muted"},"—");
+const joinIt = a => a.length<2? (a[0]||"") : a.slice(0,-1).join(", ")+" e "+a[a.length-1];
 const todayISO = () => new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Rome"});
 function dFull(iso){ const dt=dParts(iso); const G=["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"]; const MM=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"]; return G[dt.getUTCDay()]+" "+dt.getUTCDate()+" "+MM[dt.getUTCMonth()]; }
 function setHash(h){ try{ history.replaceState(null,"","#"+h); }catch(e){} }
@@ -457,7 +461,7 @@ function render(){
   const views={
     oggi: dayView,
     classifica: ()=>[standingsSection(), trendSection(), h2hSection()],
-    calendario: ()=>[calendarSection(), weeksSection()],
+    calendario: ()=>[el("div",{class:"grid calwrap"}, calendarSection(), weeksSection())],
     giochi: ()=>[gamesSection()],
     premi: ()=>[awardsSection(), M.bad.length? badSection():null, rulesSection()]
   };
@@ -579,13 +583,13 @@ function headlines(d){
   const pd=M.perDay[d], out=[];
   const order=M.players.filter(p=>pd.played[p]).sort((a,b)=>pd.pts[b]-pd.pts[a]);
   if(order.length>1){ const gap=pd.pts[order[0]]-pd.pts[order[1]];
-    if(gap===0) out.push(["🤝",`Pari merito in vetta: ${pd.winners.join(" e ")} a ${pd.pts[order[0]]} punti`]);
+    if(gap===0) out.push(["🤝",`Pari merito in vetta: ${joinIt(pd.winners)} a ${pd.pts[order[0]]} punti`]);
     else if(gap===1) out.push(["🏁",`Volata finale: ${order[0]} batte ${order[1]} di un solo punto`]);
     else if(gap>=5) out.push(["🚀",`${order[0]} fa il vuoto: ${gap} punti su ${order[1]}`]); }
   GAMES.forEach(g=>{
     const G=pd.games[g]; if(!G.order.length) return;
     const stars=G.order.filter(p=>G.res[p].extra.star);
-    if(stars.length) out.push(["⭐",`${stars.join(" e ")} ${stars.length>1?"perfetti":"perfetto"} a ${g}`]);
+    if(stars.length) out.push(["⭐",`${joinIt(stars)} ${stars.length>1?"perfetti":"perfetto"} a ${g}`]);
     const top=G.order.filter(p=>G.ranks[p]===1);
     if(top.length===1 && G.order.length>1){ const sec=G.order.find(p=>G.ranks[p]>1);
       const a=G.res[top[0]], b=G.res[sec];
