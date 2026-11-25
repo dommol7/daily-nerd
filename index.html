@@ -151,6 +151,65 @@ tr:last-child td{border-bottom:none}
 .rules li{margin:6px 0;color:var(--text-2)}
 footer{margin-top:40px;color:var(--muted);font-size:13px}
 @media (max-width:520px){.rank{font-size:34px}.score{font-size:36px}.row{grid-template-columns:40px minmax(0,1fr) auto;padding:12px 14px}.hero{padding:20px 18px 0}}
+
+/* v3: tabs, avatar, tiles, calendario */
+.tabs{position:sticky;top:0;z-index:20;display:flex;gap:4px;padding:6px;margin:0 0 22px;background:color-mix(in oklab,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:16px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:1 0 auto;font:600 15px Figtree,sans-serif;color:var(--text-2);background:transparent;border:0;border-radius:11px;padding:10px 16px;cursor:pointer;white-space:nowrap}
+.tab:hover{background:var(--surface)}
+.tab.on{background:var(--text);color:var(--bg)}
+.av{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;color:#fff;font:800 11px Figtree,sans-serif;letter-spacing:.02em;margin-right:8px;flex:none;box-shadow:0 0 0 2px var(--surface)}
+.av.sm{width:20px;height:20px;font-size:9px;margin-right:0}
+.name{display:inline-flex;align-items:center}
+.wholist{display:inline-flex;flex-wrap:wrap;gap:4px 12px}
+.legend .av.sm{margin-right:6px}
+.tiles{display:flex;gap:3px;margin-top:6px}
+.tiles i{display:block;width:16px;height:16px;border-radius:4px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.daynav{display:flex;align-items:center;gap:12px;margin:0 0 14px;flex-wrap:wrap}
+.navbtn{font:700 18px Figtree,sans-serif;width:42px;height:42px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer}
+.navbtn:disabled{opacity:.3;cursor:default}
+.dlabel{display:flex;flex-direction:column;min-width:190px}
+.dnum{font-family:"Big Shoulders Display","Arial Narrow",sans-serif;font-weight:800;font-size:30px;line-height:1}
+.ddate{color:var(--text-2);font-size:14px;margin-top:2px}
+.daynav-side{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.missing{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;background:color-mix(in oklab,var(--sun) 22%,var(--surface));border:1px solid color-mix(in oklab,var(--sun) 50%,transparent);border-radius:14px;padding:12px 16px;margin-bottom:14px}
+.missing.done{background:color-mix(in oklab,#3aa757 18%,var(--surface));border-color:color-mix(in oklab,#3aa757 45%,transparent);font-weight:600}
+.missing-t{font-weight:700}
+.missing-list{display:flex;flex-wrap:wrap;gap:8px 16px}
+.miss-item{display:inline-flex;align-items:center;gap:6px}
+.news h3,.ticket h3{margin-bottom:10px}
+.headlines{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.headlines li{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.35}
+.headlines .hi{flex:none;width:30px;height:30px;border-radius:9px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:16px}
+.gday{margin-top:14px;align-items:start}
+.seg{display:inline-flex;gap:2px;padding:3px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.seg button{font:600 13px Figtree,sans-serif;border:0;background:transparent;color:var(--text-2);padding:7px 12px;border-radius:9px;cursor:pointer}
+.seg button.on{background:var(--route);color:#fff}
+.months{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.month h3{font-family:"Big Shoulders Display","Arial Narrow",sans-serif;font-size:26px;font-weight:800;margin-bottom:10px}
+.calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-h{font-size:12px;color:var(--muted);text-align:center;font-weight:600}
+.cal-c{aspect-ratio:1/1.05;border-radius:10px;background:var(--surface-2);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:5px 2px;font:600 12px Figtree,sans-serif;color:var(--muted);border:1px solid transparent}
+.cal-c.empty{background:transparent}
+.cal-c.future{opacity:.45}
+.cal-c.has{background:var(--surface);border-color:var(--border);color:var(--text);cursor:pointer}
+.cal-c.has:hover{border-color:var(--route)}
+.cal-c.today{box-shadow:inset 0 0 0 2px var(--route)}
+.cal-c.sel{background:color-mix(in oklab,var(--sun) 25%,var(--surface))}
+.cal-c .n{align-self:flex-start;padding-left:4px}
+.cal-w{display:flex;gap:0}
+.cal-w .av.sm:nth-child(2){margin-left:-6px}
+.cal-s{font-size:8px;line-height:1}
+.wk{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.wk:last-child{border-bottom:0}
+.wk-d{font-weight:700}
+.wk-w{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.chip.live::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#2fbf71;margin-right:6px;box-shadow:0 0 0 3px color-mix(in oklab,#2fbf71 25%,transparent);animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 6px transparent}}
+@media (prefers-reduced-motion:reduce){.chip.live::before{animation:none}}
+.daytable td{padding:12px 8px}
+section:first-of-type{margin-top:0}
+@media (max-width:520px){.tab{padding:9px 12px;font-size:14px}.daynav-side{margin-left:0;width:100%}.tiles i{width:14px;height:14px}.cal-c{font-size:11px}}
 </style>
 </head>
 <body>
@@ -158,7 +217,7 @@ footer{margin-top:40px;color:var(--muted);font-size:13px}
   <header>
     <div>
       <h1>Daily Ne<span class="paren">(</span>r<span class="paren">)</span>d</h1>
-      <p class="sub">Farhike, City Angle e Travle, ogni giorno. Cinque amici, una sola mappa da conquistare.</p>
+      <p class="sub">Farhike, City Angle e Travle: ogni giorno una nuova mappa da conquistare.</p>
     </div>
     <div class="chips"><span class="chips" id="chips"></span><button class="chip" id="themeBtn" title="Tema chiaro/scuro" >◐ Tema</button></div>
   </header>
@@ -180,7 +239,7 @@ const POINTS = [5,3,2,1,0];
 const BONUS = 1; // punto extra per una partita perfetta
 const CATS = {
   "Farhike":   [["⬛","Mancato","#2e3338",0],["⬜","Comune","#b4bac0",1],["🟩","Non comune","#3aa757",2],["🟦","Raro","#2f6fd6",3],["🟪","Sfuggente","#8b4fd1",4],["🟧","Pioniere","#ef8a1f",5]],
-  "City Angle":[["🟩","Al primo tentativo","#3aa757"],["🟨","Al secondo","#f2c230"],["🟧","Al terzo","#ef8a1f"],["🟥","Più tentativi","#d9402f"]],
+  "City Angle":[["🟩","Al primo tentativo","#3aa757"],["🟨","Al secondo","#f2c230"],["🟧","Al terzo","#ef8a1f"],["🟥","Al quarto","#d9402f"],["🟪","Al quinto o oltre","#8b4fd1"],["⬛","Non trovata","#2e3338"]],
   "Travle":    [["✅","Perfetto","#12a150"],["🟩","Giusto","#8fd17e"],["🟧","Non necessario","#ef8a1f"],["🟥","Sbagliato","#d9402f"]]
 };
 const STAR_RULE = {"Farhike":"tutti e 5 i paesi trovati, nessun ⬛","City Angle":"3 città al primo tentativo, 🟩🟩🟩","Travle":"percorso perfetto, +0"};
@@ -261,7 +320,7 @@ const PARSE = {
     const t=raw.replace(/https?:\/\/\S+/gi," ");
     let v=null; const m=t.match(/(\d[\d.,\s]*)\s*pts?\b/i);
     if(m) v=parseInt(m[1].replace(/\D/g,""),10);
-    const sv=t.match(/solved\s+(?:all\s+)?(\d)/i), gs=t.match(/in\s+(\d+)\s+guess/i);
+    const sv=t.match(/solved\s+(?:all\s+)?(\d)/i), gs=t.match(/(\d+)\s+guess/i);
     const ft=t.match(/(\d)\s*\/\s*5\s*first/i);
     if(v==null){ const ns=numbers(t.replace(/\d\s*\/\s*5/g," ")); if(ns.length) v=Math.max(...ns); }
     if(v==null||isNaN(v)) return null;
@@ -360,35 +419,56 @@ function build(){
 }
 
 /* ---------- render ---------- */
-let M=null, selDay=null;
+let M=null, selDay=null, userPicked=false, tab="oggi", period="tutto";
+const TABS=[["oggi","Giornata"],["classifica","Classifica"],["calendario","Calendario"],["giochi","Giochi"],["premi","Premi"]];
 const color = p => `var(--p${Math.max(0,M.players.indexOf(p))%5})`;
 const swatch = p => el("span",{class:"dot",style:`background:${color(p)}`});
-const who = p => el("span",{class:"name"},swatch(p),p);
-const whoList = ps => ps.length? el("span",null, ...ps.map((p,i)=>[i?" · ":"", who(p)])) : el("span",{class:"muted"},"—");
+function initials(p){ const caps=p.match(/[A-ZÀ-Ý]/g)||[]; return (caps.length>1? caps[0]+caps[1] : p.slice(0,2)).toUpperCase(); }
+const avatar = (p,cls="") => el("span",{class:"av "+cls,style:`background:${color(p)}`,"aria-hidden":"true"},initials(p));
+const who = p => el("span",{class:"name"},avatar(p),p);
+const whoList = ps => ps.length? el("span",{class:"wholist"}, ...ps.map(p=>who(p))) : el("span",{class:"muted"},"—");
+const todayISO = () => new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Rome"});
+function dFull(iso){ const dt=dParts(iso); const G=["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"]; const MM=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"]; return G[dt.getUTCDay()]+" "+dt.getUTCDate()+" "+MM[dt.getUTCMonth()]; }
+function setHash(h){ try{ history.replaceState(null,"","#"+h); }catch(e){} }
+function readHash(){
+  const h=decodeURIComponent(location.hash.slice(1));
+  if(/^giorno-\d{4}-\d{2}-\d{2}$/.test(h)){ tab="oggi"; selDay=h.slice(7); userPicked=true; }
+  else if(TABS.some(t=>t[0]===h)){ tab=h; }
+}
+function goTab(t){ tab=t; setHash(t==="oggi"&&userPicked? "giorno-"+selDay : t); render(); window.scrollTo({top:Math.min(window.scrollY, document.getElementById("app").offsetTop-10)}); }
+function goDay(d){ selDay=d; userPicked=true; tab="oggi"; setHash("giorno-"+d); render(); }
 
 function render(){
   M=build();
   app.innerHTML="";
   const chips=document.getElementById("chips"); chips.innerHTML="";
   const n=M.dayList.length;
-  chips.append(el("span",{class:"chip"},n? `Giorno ${n}`:"Giorno 1"), el("span",{class:"chip"},`${M.players.length} sfidanti`));
-  if(D.updatedAt){ const u=new Date(D.updatedAt); chips.append(el("span",{class:"chip"},(D.live?"🟢 Dal vivo, ":"Aggiornata ")+u.toLocaleString("it-IT",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}))); }
+  chips.append(el("span",{class:"chip"},`${M.players.length} sfidanti, ${n||1} ${n===1||!n?"giornata":"giornate"}`));
+  if(D.updatedAt){ const u=new Date(D.updatedAt); chips.append(el("span",{class:"chip"+(D.live?" live":"")},(D.live?"Dal vivo, ":"Aggiornata ")+u.toLocaleString("it-IT",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}))); }
   if(!n){
-    app.append(el("div",{class:"card empty"},
-      el("div",{class:"big"},"Si parte!"),
-      el("div",null,"Ancora nessun risultato nello sheet. Ognuno incolla nella propria cella il testo “Condividi” del gioco: la classifica si accende al prossimo aggiornamento."),
-    ));
+    app.append(el("div",{class:"card empty"}, el("div",{class:"big"},"Si parte!"),
+      el("div",null,"Ancora nessun risultato nello sheet. Ognuno incolla nella propria cella il testo “Condividi” del gioco.")));
     if(M.bad.length) app.append(badSection());
-    app.append(rulesSection());
-    foot(); return;
+    app.append(rulesSection()); foot(); return;
   }
-  if(!selDay || !M.dayList.includes(selDay)) selDay=M.dayList[n-1];
-  app.append(heroSection(), standingsSection(), daySection(), trendSection(), gamesSection(), awardsSection(), h2hSection());
-  if(M.bad.length) app.append(badSection());
-  app.append(rulesSection());
+  const today=todayISO();
+  if(!userPicked || !M.dayList.includes(selDay)) selDay = M.dayList.includes(today)? today : M.dayList[n-1];
+  app.append(tabsBar());
+  const views={
+    oggi: dayView,
+    classifica: ()=>[standingsSection(), trendSection(), h2hSection()],
+    calendario: ()=>[calendarSection(), weeksSection()],
+    giochi: ()=>[gamesSection()],
+    premi: ()=>[awardsSection(), M.bad.length? badSection():null, rulesSection()]
+  };
+  [].concat(views[tab]()).filter(Boolean).forEach(x=>app.append(x));
   foot();
 }
-function foot(){ document.getElementById("foot").textContent="I dati arrivano dal vivo dallo sheet “Daily Ne(r)d”. Punti per ogni gioco: 5-3-2-1."; }
+function foot(){ document.getElementById("foot").textContent="I risultati arrivano dal vivo dallo sheet “Daily Ne(r)d” e si aggiornano da soli ogni 5 minuti."; }
+
+function tabsBar(){
+  return el("nav",{class:"tabs","aria-label":"Sezioni"}, ...TABS.map(([k,l])=>el("button",{class:"tab"+(tab===k?" on":""),"aria-current":tab===k?"page":"false",onclick:()=>goTab(k)},l)));
+}
 
 const NS="http://www.w3.org/2000/svg";
 function svgEl(t,a){const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); return e;}
@@ -413,81 +493,127 @@ function topoSVG(seed){
 
 function podiumSVG(pd){
   const order=[...M.players].filter(p=>pd.played[p]).sort((a,b)=>pd.pts[b]-pd.pts[a]);
+  const groups=[]; order.forEach(p=>{ const g=groups.find(g=>pd.pts[g[0]]===pd.pts[p]); g? g.push(p) : groups.push([p]); });
   const slots=[{i:1,x:150,h:150},{i:0,x:290,h:225},{i:2,x:425,h:110}];
   const W=560,H=340,base=H-6;
-  const s=svgEl("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Podio del giorno: "+order.slice(0,3).map(p=>p+" "+pd.pts[p]+" punti").join(", ")});
-  // back ridge
+  const s=svgEl("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Podio: "+groups.slice(0,3).map(g=>g.join(" e ")+" "+pd.pts[g[0]]+" punti").join(", ")});
   s.append(svgEl("path",{d:`M0,${base} L60,${base-70} L110,${base-40} L200,${base-95} L260,${base-60} L360,${base-120} L470,${base-55} L520,${base-80} L${W},${base-30} L${W},${base} Z`,fill:"var(--text)",opacity:".07"}));
   const draw=sl=>{
-    const p=order[sl.i]; const x=sl.x,h=sl.h,w=h*1.25+60;
-    const col=p?`var(--p${M.players.indexOf(p)%5})`:"var(--muted)";
+    const g=groups[sl.i]; const x=sl.x,h=sl.h,w=h*1.25+60;
+    const col=g?`var(--p${M.players.indexOf(g[0])%5})`:"var(--muted)";
     const pk=[x,base-h], L=[x-w/2,base], R=[x+w/2,base], sh1=[x-w*0.2,base-h*0.6], sh2=[x+w*0.24,base-h*0.52];
-    s.append(svgEl("path",{d:`M${L} L${sh1} L${pk} L${sh2} L${R} Z`,fill:col,stroke:"var(--sea)","stroke-width":3,"stroke-linejoin":"round",opacity:p?1:.35}));
-    // shade
+    s.append(svgEl("path",{d:`M${L} L${sh1} L${pk} L${sh2} L${R} Z`,fill:col,stroke:"var(--sea)","stroke-width":3,"stroke-linejoin":"round",opacity:g?1:.3}));
+    if(g&&g.length>1){ g.slice(1,3).forEach((p,k)=>{ s.append(svgEl("path",{d:`M${x-w*(0.34-k*0.08)},${base} L${x-w*(0.12-k*0.06)},${base-h*0.45} L${x+w*0.02},${base} Z`,fill:`var(--p${M.players.indexOf(p)%5})`,opacity:.95})); }); }
     s.append(svgEl("path",{d:`M${pk} L${sh2} L${R} L${x+w*0.05},${base} Z`,fill:"#000",opacity:".12"}));
-    // snow
     const sy=base-h*0.74;
     s.append(svgEl("path",{d:`M${pk} L${x+h*0.21},${sy} L${x+h*0.1},${sy-6} L${x},${sy+8} L${x-h*0.08},${sy-4} L${x-h*0.17},${sy+4} Z`,fill:"var(--snow)"}));
-    if(sl.i===0&&p){ s.append(svgEl("line",{x1:x,y1:base-h,x2:x,y2:base-h-34,stroke:"var(--text)","stroke-width":2.5,"stroke-linecap":"round"}));
+    if(sl.i===0&&g){ s.append(svgEl("line",{x1:x,y1:base-h,x2:x,y2:base-h-34,stroke:"var(--text)","stroke-width":2.5,"stroke-linecap":"round"}));
       s.append(svgEl("path",{d:`M${x},${base-h-34} L${x+24},${base-h-27} L${x},${base-h-20} Z`,fill:"var(--route)"})); }
     const ty=base-h-(sl.i===0?46:14);
-    const t1=svgEl("text",{x,y:ty-20,"text-anchor":"middle","font-family":"Big Shoulders Display, Arial Narrow, sans-serif","font-weight":800,"font-size":sl.i===0?34:26,fill:"var(--text)"}); t1.textContent=p||"—"; s.append(t1);
-    const t2=svgEl("text",{x,y:ty,"text-anchor":"middle","font-family":"Figtree, sans-serif","font-weight":600,"font-size":14,fill:"var(--text-2)"}); t2.textContent=p? `${pd.pts[p]} pt`:""; s.append(t2);
+    const label=g? g.join(" & ") : "—"; const fs=(sl.i===0?34:26)*(label.length>12?0.7:1);
+    const t1=svgEl("text",{x,y:ty-20,"text-anchor":"middle","font-family":"Big Shoulders Display, Arial Narrow, sans-serif","font-weight":800,"font-size":fs,fill:"var(--text)"}); t1.textContent=label; s.append(t1);
+    const t2=svgEl("text",{x,y:ty,"text-anchor":"middle","font-family":"Figtree, sans-serif","font-weight":600,"font-size":14,fill:"var(--text-2)"}); t2.textContent=g? `${pd.pts[g[0]]} pt`:""; s.append(t2);
     const t3=svgEl("text",{x,y:base-16,"text-anchor":"middle","font-family":"Big Shoulders Display, Arial Narrow, sans-serif","font-weight":800,"font-size":30,fill:"#fff",opacity:".9"}); t3.textContent=sl.i+1; s.append(t3);
   };
   [slots[0],slots[2],slots[1]].forEach(draw);
   return el("div",{class:"podium"},s);
 }
 
-function heroSection(){
-  const last=M.dayList[M.dayList.length-1], pd=M.perDay[last], S=M.S;
+function heroSection(d){
+  const pd=M.perDay[d], S=M.S, idx=M.dayList.indexOf(d), isLast=idx===M.dayList.length-1;
   const leader=M.ranking[0];
   const gap = M.ranking[1]!=null ? S[leader].points - S[M.ranking[1]].points : 0;
   const streaker=[...M.players].sort((a,b)=>S[b].winStreak-S[a].winStreak)[0];
   const ws=S[streaker].winStreak;
   const marker=(ico,lbl,val)=>el("div",{class:"marker"}, el("span",{class:"ico","aria-hidden":"true"},ico), el("div",null, el("div",{class:"lbl"},lbl), el("div",{class:"val"},val)));
-  const panel=el("section",{class:"hero",id:"hero"}, topoSVG(M.dayList.length));
+  const panel=el("section",{class:"hero",id:"hero"}, topoSVG(idx+1));
   panel.append(el("div",{class:"hero-grid"},
     el("div",{class:"hero-text"},
-      el("p",{class:"kicker"}, `Giorno ${M.dayList.length}, ${dLong(last)}`),
-      el("p",{class:"hero-title"}, pd.winners.length>1? "In vetta a pari merito":"In vetta oggi"),
+      el("p",{class:"hero-title"}, pd.winners.length>1? "In vetta a pari merito" : (d===todayISO()? "In vetta oggi" : "Re del giorno")),
       el("div",{class:"hero-name"}, pd.winners.join(" & ")||"—"),
       el("p",{class:"hero-note"}, pd.winners.length? `${pd.pts[pd.winners[0]]} punti 👑`+(pd.stars[pd.winners[0]]?` con ${pd.stars[pd.winners[0]]} ⭐`:""):""),
       el("div",{class:"markers"},
-        marker("🥄","Cucchiaio di legno", pd.spoons.length? whoList(pd.spoons):"Oggi nessuno"),
-        marker("🏆","In testa alla generale", el("span",null, who(leader), ` con ${S[leader].points} pt`+(M.ranking[1]&&gap? `, +${gap} su ${M.ranking[1]}`:""))),
-        marker("🔥","Serie di vittorie", ws? el("span",null, who(streaker), ` da ${ws} giorn${ws>1?"i":"o"}`):"Nessuna serie aperta"))
+        marker("🥄","Cucchiaio di legno", pd.spoons.length? whoList(pd.spoons):"Nessuno"),
+        isLast? marker("🏆","In testa alla generale", el("span",null, who(leader), ` ${S[leader].points} pt`+(M.ranking[1]&&gap? `, +${gap} su ${M.ranking[1]}`:""))) : null,
+        isLast? marker("🔥","Serie di vittorie", ws? el("span",null, who(streaker), ` da ${ws} giorn${ws>1?"i":"o"}`):"Nessuna serie aperta") : null)
     ),
     podiumSVG(pd)
   ));
   return panel;
 }
 
-function standingsSection(){
-  const S=M.S, max=Math.max(1,...M.players.map(p=>S[p].points));
-  const board=el("div",{class:"board"});
-  M.ranking.forEach((p,i)=>{
-    const s=S[p], avg=s.daysPlayed? s.points/s.daysPlayed:0;
-    const rk=M.ranking.findIndex(q=>S[q].points===s.points)+1;
-    board.append(el("div",{class:"row"+(rk===1?" first":"")},
-      el("div",{class:"rank"}, rk),
-      el("div",null,
-        el("div",{class:"who-line"}, who(p), s.winStreak>1? el("span",{class:"pill"},`🔥 ${s.winStreak}`):null),
-        el("div",{class:"stats"}, `${s.dayWins} ${s.dayWins===1?"giornata vinta":"giornate vinte"}, ${s.gameWins} ${s.gameWins===1?"gioco vinto":"giochi vinti"}, media ${fmt(avg,1)} al giorno, presente ${s.daysPlayed} su ${M.dayList.length}`),
-        el("div",{class:"track"}, el("i",{style:`width:${(s.points/max*100).toFixed(1)}%;background:${color(p)}`}))),
-      el("div",{class:"score"}, s.points, el("small",null,"punti"))
-    ));
-  });
-  return el("section",{id:"classifica"}, secHead("Classifica generale","Somma dei punti di tutte le giornate"), board);
+function tiles(g, str){
+  if(!str) return null;
+  const map=Object.fromEntries(CATS[g].map(c=>[c[0],c]));
+  return el("div",{class:"tiles",role:"img","aria-label":Array.from(str).map(ch=>map[ch]?map[ch][1]:ch).join(", ")},
+    ...Array.from(str).map(ch=>map[ch]? el("i",{style:`background:${map[ch][2]}`,title:map[ch][1]}) : null));
 }
 
-function daySection(){
-  const idx=M.dayList.indexOf(selDay), pd=M.perDay[selDay];
-  const go=k=>{ selDay=M.dayList[idx+k]; render(); document.getElementById("giornata").scrollIntoView({block:"nearest"}); };
+function dayView(){
+  const idx=M.dayList.indexOf(selDay), last=M.dayList[M.dayList.length-1];
   const nav=el("div",{class:"daynav"},
-    el("button",{onclick:()=>go(-1), ...(idx<=0?{disabled:""}:{}) ,"aria-label":"Giorno precedente"},"←"),
-    el("span",{class:"dlabel"}, `Giorno ${idx+1}, ${dLong(selDay)}`),
-    el("button",{onclick:()=>go(1), ...(idx>=M.dayList.length-1?{disabled:""}:{}),"aria-label":"Giorno successivo"},"→"));
+    el("button",{class:"navbtn",onclick:()=>goDay(M.dayList[idx-1]), ...(idx<=0?{disabled:""}:{}),"aria-label":"Giorno precedente"},"←"),
+    el("div",{class:"dlabel"}, el("span",{class:"dnum"},`Giorno ${idx+1}`), el("span",{class:"ddate"},dFull(selDay))),
+    el("button",{class:"navbtn",onclick:()=>goDay(M.dayList[idx+1]), ...(idx>=M.dayList.length-1?{disabled:""}:{}),"aria-label":"Giorno successivo"},"→"),
+    el("div",{class:"daynav-side"},
+      selDay!==last? el("button",{class:"btn",onclick:()=>{userPicked=false; setHash("oggi"); render();}},"Torna a oggi") : null,
+      el("button",{class:"btn",onclick:()=>goTab("calendario")},"📅 Scegli un giorno")));
+  return [nav, missingCard(), heroSection(selDay), el("div",{class:"grid gday"}, headlinesCard(selDay), shareCard(selDay)), dayTable(selDay)];
+}
+
+function missingCard(){
+  const today=todayISO(), last=M.dayList[M.dayList.length-1];
+  if(selDay!==last && selDay!==today) return null;
+  if(today<last) return null;
+  const data=M.days[today]||{};
+  const rows=M.players.map(p=>({p, miss:GAMES.filter(g=>!(data[g]&&data[g][p]))}));
+  const todo=rows.filter(r=>r.miss.length);
+  if(!todo.length) return el("div",{class:"missing done"},"🎉 Oggi hanno giocato tutti a tutti e tre i giochi: giornata completa!");
+  return el("div",{class:"missing"},
+    el("div",{class:"missing-t"}, today===last? "Oggi mancano ancora" : `Oggi, ${dFull(today)}, nessuno ha ancora giocato`),
+    el("div",{class:"missing-list"}, ...todo.map(r=>el("span",{class:"miss-item"}, who(r.p), el("span",{class:"muted"}, r.miss.length===3? "tutti e 3" : r.miss.map(g=>GAME_ICON[g]).join(" ")))))
+  );
+}
+
+function headlines(d){
+  const pd=M.perDay[d], out=[];
+  const order=M.players.filter(p=>pd.played[p]).sort((a,b)=>pd.pts[b]-pd.pts[a]);
+  if(order.length>1){ const gap=pd.pts[order[0]]-pd.pts[order[1]];
+    if(gap===0) out.push(["🤝",`Pari merito in vetta: ${pd.winners.join(" e ")} a ${pd.pts[order[0]]} punti`]);
+    else if(gap===1) out.push(["🏁",`Volata finale: ${order[0]} batte ${order[1]} di un solo punto`]);
+    else if(gap>=5) out.push(["🚀",`${order[0]} fa il vuoto: ${gap} punti su ${order[1]}`]); }
+  GAMES.forEach(g=>{
+    const G=pd.games[g]; if(!G.order.length) return;
+    const stars=G.order.filter(p=>G.res[p].extra.star);
+    if(stars.length) out.push(["⭐",`${stars.join(" e ")} ${stars.length>1?"perfetti":"perfetto"} a ${g}`]);
+    const top=G.order.filter(p=>G.ranks[p]===1);
+    if(top.length===1 && G.order.length>1){ const sec=G.order.find(p=>G.ranks[p]>1);
+      const a=G.res[top[0]], b=G.res[sec];
+      if(g==="Farhike" && a.extra.km-b.extra.km>=40) out.push([GAME_ICON[g],`${top[0]} domina Farhike: ${fmt(a.extra.km)} km, ${fmt(a.extra.km-b.extra.km)} più di ${sec}`]);
+      if(g==="City Angle" && a.extra.pts-b.extra.pts>=700) out.push([GAME_ICON[g],`${top[0]} stacca tutti a City Angle con ${fmt(a.extra.pts)} pts`]); }
+  });
+  M.players.forEach(p=>{
+    const f=pd.games["Farhike"].res[p], c=pd.games["City Angle"].res[p], t=pd.games["Travle"].res[p];
+    if(f){ const k=f.extra.counts||{}; if(k["🟧"]) out.push(["🟧",`${p} scova un paese trailblazer a Farhike`]); else if(k["🟪"]>=1&&!f.extra.star) out.push(["🟪",`${p} trova un paese sfuggente a Farhike`]); if((k["⬛"]||0)>=4) out.push(["🕳️",`${p} si perde: ${k["⬛"]} paesi mancati a Farhike`]); }
+    if(c && (c.extra.counts||{})["⬛"]) out.push(["🏙️",`${p} non trova una città a City Angle`]);
+    if(t && ((t.extra.counts||{})["🟥"]||0)>=2) out.push(["🚧",`${p} sbaglia strada ${(t.extra.counts||{})["🟥"]} volte a Travle`]);
+    if(t && !t.extra.ok) out.push(["🧳",`${p} non arriva a destinazione a Travle`]);
+  });
+  const seen=new Set(); return out.filter(([i,tx])=>!seen.has(tx)&&seen.add(tx)).slice(0,6);
+}
+function headlinesCard(d){
+  const h=headlines(d);
+  return el("div",{class:"card news"}, el("h3",null,"I titoli della giornata"),
+    h.length? el("ul",{class:"headlines"}, ...h.map(([i,t])=>el("li",null, el("span",{class:"hi","aria-hidden":"true"},i), el("span",null,t)))) : el("p",{class:"muted"},"Giornata tranquilla, niente da segnalare."));
+}
+function shareCard(d){
+  const copyBtn=el("button",{class:"btn primary",onclick:async()=>{ try{ await navigator.clipboard.writeText(shareText(d)+"\n\n"+location.href.split("#")[0]+"#giorno-"+d); copyBtn.textContent="Copiato ✓"; }catch(e){ copyBtn.textContent="Seleziona il testo e copialo a mano"; } }},"Copia per WhatsApp");
+  return el("div",{class:"ticket"}, el("h3",null,"Il riassunto per il gruppo"), el("div",{class:"share"}, shareText(d)), copyBtn,
+    el("p",{class:"muted",style:"font-size:12px;margin:8px 0 0"},"Il testo copiato include il link diretto a questa giornata."));
+}
+
+function dayTable(d){
+  const pd=M.perDay[d];
   const order=[...M.players].sort((a,b)=>pd.pts[b]-pd.pts[a]);
   const tb=el("tbody");
   order.forEach(p=>{
@@ -497,29 +623,85 @@ function daySection(){
       if(!r){ tr.append(el("td",{class:"absent"},"non giocato")); return; }
       const pts=POINTS[G.ranks[p]-1]||0;
       tr.append(el("td",null, el("span",{class:"raw"},r.show), el("span",{class:"pill"+(pts===5?" p5":"")},"+"+pts), r.extra.star? el("span",{class:"pill star",title:"Partita perfetta: "+STAR_RULE[g]},"⭐+"+BONUS):null,
-        r.strip? el("div",{class:"strip","aria-label":"Esito per tappa"},r.strip):null,
-        r.sub? el("div",{class:"muted",style:"font-size:12px"},r.sub):null));
+        tiles(g,r.strip), r.sub? el("div",{class:"muted",style:"font-size:12px"},r.sub):null));
     });
-    tr.append(el("td",{class:"num"}, el("b",{style:"font-size:18px"},pd.played[p]?pd.pts[p]:"—")));
+    tr.append(el("td",{class:"num"}, el("b",{style:"font-size:20px"},pd.played[p]?pd.pts[p]:"—")));
     tb.append(tr);
   });
-  const copyBtn=el("button",{class:"btn primary",onclick:async()=>{ try{ await navigator.clipboard.writeText(shareText(selDay)); copyBtn.textContent="Copiato ✓"; }catch(e){ copyBtn.textContent="Seleziona il testo e copialo a mano"; } }},"Copia per WhatsApp");
-  const cal=el("div",{class:"cal"});
-  M.dayList.forEach(d=>{
-    const w=M.perDay[d].winners;
-    cal.append(el("button",{class:d===selDay?"sel":"",title:`${dLong(d)}: ${w.join(", ")}`,"aria-label":`${dLong(d)}, vince ${w.join(" e ")}`,onclick:()=>{selDay=d;render();}},
-      el("span",{class:"d"},dShort(d)),
-      w.length===1? el("span",{class:"w",style:`background:${color(w[0])}`},w[0][0]) : el("span",{class:"w",style:"background:var(--muted)"},w.length>1?"=":"·")));
+  return el("section",{id:"giornata"}, secHead("Tutti i risultati","Punti, quadratini e stelle di ogni gioco"),
+    el("div",{class:"card"}, el("div",{class:"scroll"}, el("table",{class:"daytable"},
+      el("thead",null, el("tr",null, el("th",null,"Chi"), ...GAMES.map(g=>el("th",null,GAME_ICON[g]+" "+g)), el("th",{class:"num"},"Totale"))), tb))));
+}
+
+/* ---- classifica per periodo ---- */
+function weekStart(iso){ const dt=dParts(iso); const wd=(dt.getUTCDay()+6)%7; dt.setUTCDate(dt.getUTCDate()-wd); return dt.toISOString().slice(0,10); }
+function addDays(iso,n){ const dt=dParts(iso); dt.setUTCDate(dt.getUTCDate()+n); return dt.toISOString().slice(0,10); }
+function periodStats(days){
+  const st={}; M.players.forEach(p=>st[p]={points:0,dayWins:0,daysPlayed:0,stars:0});
+  days.forEach(d=>{ const pd=M.perDay[d]; const active=M.players.filter(p=>pd.played[p]);
+    M.players.forEach(p=>{ const s=st[p]; s.points+=pd.pts[p]; s.stars+=pd.stars[p]; if(pd.played[p]) s.daysPlayed++; if(pd.winners.includes(p)&&active.length>1) s.dayWins++; }); });
+  return st;
+}
+function standingsSection(){
+  const ref=M.dayList[M.dayList.length-1];
+  const ranges={tutto:M.dayList, mese:M.dayList.filter(d=>d.slice(0,7)===ref.slice(0,7)), settimana:M.dayList.filter(d=>weekStart(d)===weekStart(ref))};
+  const days=ranges[period]; const st=periodStats(days);
+  const rank=[...M.players].sort((a,b)=>st[b].points-st[a].points || st[b].dayWins-st[a].dayWins);
+  const max=Math.max(1,...M.players.map(p=>st[p].points));
+  const board=el("div",{class:"board"});
+  rank.forEach(p=>{
+    const s=st[p], avg=s.daysPlayed? s.points/s.daysPlayed:0;
+    const rk=rank.findIndex(q=>st[q].points===s.points)+1;
+    board.append(el("div",{class:"row"+(rk===1?" first":"")},
+      el("div",{class:"rank"}, rk),
+      el("div",null,
+        el("div",{class:"who-line"}, who(p), period==="tutto"&&M.S[p].winStreak>1? el("span",{class:"pill"},`🔥 ${M.S[p].winStreak}`):null, s.stars? el("span",{class:"pill star"},`⭐ ${s.stars}`):null),
+        el("div",{class:"stats"}, `${s.dayWins} ${s.dayWins===1?"giornata vinta":"giornate vinte"}, media ${fmt(avg,1)} al giorno, presente ${s.daysPlayed} su ${days.length}`),
+        el("div",{class:"track"}, el("i",{style:`width:${(s.points/max*100).toFixed(1)}%;background:${color(p)}`}))),
+      el("div",{class:"score"}, s.points, el("small",null,"punti"))
+    ));
   });
-  return el("section",{id:"giornata"}, secHead("La giornata","Risultati e punti di ogni gioco"),
-    el("div",{class:"grid gday"},
-      el("div",{class:"card"}, nav,
-        el("div",{class:"scroll"}, el("table",null,
-          el("thead",null, el("tr",null, el("th",null,"Chi"), ...GAMES.map(g=>el("th",null,GAME_ICON[g]+" "+g)), el("th",{class:"num"},"Totale"))), tb))),
-      el("div",{class:"ticket"}, el("h3",null,"Il riassunto per il gruppo"), el("div",{class:"share"}, shareText(selDay)), copyBtn)
-    ),
-    el("div",{style:"margin-top:18px"}, el("h3",null,"Calendario dei re"), el("p",{class:"muted",style:"font-size:13px;margin:0 0 10px"},"L'iniziale di chi ha vinto ogni giornata. Tocca un giorno per aprirlo."), cal)
-  );
+  const seg=el("div",{class:"seg",role:"group","aria-label":"Periodo"}, ...[["tutto","Sempre"],["mese","Questo mese"],["settimana","Questa settimana"]].map(([k,l])=>el("button",{class:period===k?"on":"","aria-pressed":period===k?"true":"false",onclick:()=>{period=k; render();}},l)));
+  const desc = period==="tutto"? "Tutte le giornate giocate" : period==="mese"? "Solo le giornate di "+dFull(ref).split(" ").slice(2).join(" ") : `Da lunedì ${dShort(weekStart(ref))} a oggi`;
+  return el("section",{id:"classifica"}, el("div",{class:"sec-head"}, el("h2",null,"Classifica"), seg), el("p",{class:"muted",style:"margin:-6px 0 12px"},desc), board);
+}
+
+/* ---- calendario ---- */
+function calendarSection(){
+  const today=todayISO(), first=M.dayList[0], lastD=[M.dayList[M.dayList.length-1],today].sort()[1];
+  const months=[]; let ym=first.slice(0,7);
+  while(ym<=lastD.slice(0,7)){ months.push(ym); let [y,m]=ym.split("-").map(Number); m++; if(m>12){m=1;y++;} ym=y+"-"+String(m).padStart(2,"0"); }
+  const MM=["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
+  const blocks=months.reverse().map(ym=>{
+    const [y,m]=ym.split("-").map(Number); const firstDay=ym+"-01"; const lead=(dParts(firstDay).getUTCDay()+6)%7;
+    const daysIn=new Date(Date.UTC(y,m,0)).getUTCDate();
+    const grid=el("div",{class:"calgrid"}, ...["L","M","M","G","V","S","D"].map(x=>el("div",{class:"cal-h"},x)));
+    for(let i=0;i<lead;i++) grid.append(el("div",{class:"cal-c empty"}));
+    for(let dd=1; dd<=daysIn; dd++){
+      const iso=ym+"-"+String(dd).padStart(2,"0"); const has=M.dayList.includes(iso);
+      const cls="cal-c"+(has?" has":"")+(iso===today?" today":"")+(iso===selDay&&has?" sel":"")+(iso>today?" future":"");
+      if(!has){ grid.append(el("div",{class:cls}, el("span",{class:"n"},dd))); continue; }
+      const pd=M.perDay[iso], w=pd.winners, st=M.players.reduce((a,p)=>a+pd.stars[p],0);
+      grid.append(el("button",{class:cls,onclick:()=>goDay(iso),"aria-label":`${dFull(iso)}: vince ${w.join(" e ")}`},
+        el("span",{class:"n"},dd),
+        el("span",{class:"cal-w"}, ...w.slice(0,2).map(p=>avatar(p,"sm"))),
+        st? el("span",{class:"cal-s"},"⭐".repeat(Math.min(st,3))) : null));
+    }
+    return el("div",{class:"card month"}, el("h3",null,MM[m-1]+" "+y), grid);
+  });
+  return el("section",{id:"calendario"}, secHead("Calendario","Tocca un giorno per aprire il riassunto di quella giornata"),
+    el("div",{class:"legend",style:"margin-bottom:12px"}, ...M.players.map(p=>el("span",null,avatar(p,"sm"),p))), el("div",{class:"grid months"}, ...blocks));
+}
+function weeksSection(){
+  const weeks={}; M.dayList.forEach(d=>{ (weeks[weekStart(d)]=weeks[weekStart(d)]||[]).push(d); });
+  const rows=Object.keys(weeks).sort().reverse().map(ws=>{
+    const st=periodStats(weeks[ws]); const rank=[...M.players].sort((a,b)=>st[b].points-st[a].points);
+    const top=rank.filter(p=>st[p].points===st[rank[0]].points);
+    const cur=ws===weekStart(todayISO());
+    return el("div",{class:"wk"}, el("div",null, el("div",{class:"wk-d"}, `${dShort(ws)} – ${dShort(addDays(ws,6))}`+(cur?" (in corso)":"")), el("div",{class:"muted",style:"font-size:12px"},`${weeks[ws].length} ${weeks[ws].length===1?"giornata":"giornate"}`)),
+      el("div",{class:"wk-w"}, cur? "In testa: " : "👑 ", whoList(top), el("b",null,` ${st[top[0]].points} pt`)));
+  });
+  return el("section",{id:"settimane"}, secHead("I re della settimana","Chi ha fatto più punti da lunedì a domenica"), el("div",{class:"card"}, ...rows));
 }
 
 function shareText(d){
@@ -652,13 +834,19 @@ function rulesSection(){
       el("li",null,"Chi non gioca prende 0 per quel gioco."))));
 }
 
+readHash();
 render();
-if(SHEET_CSV_URL){
+function loadLive(){
+  if(!SHEET_CSV_URL) return;
   fetch(SHEET_CSV_URL+(SHEET_CSV_URL.includes("?")?"&":"?")+"t="+Date.now(),{cache:"no-store"})
     .then(r=>{ if(!r.ok) throw new Error(r.status); return r.text(); })
-    .then(t=>{ if(/^\s*"?Giorno"?,/i.test(t)){ D.csv=t; D.updatedAt=new Date().toISOString(); D.live=true; render(); } })
+    .then(t=>{ if(/^\s*"?Giorno"?,/i.test(t) && (t!==D.csv || !D.live)){ D.csv=t; D.updatedAt=new Date().toISOString(); D.live=true; render(); } else if(D.live){ D.updatedAt=new Date().toISOString(); } })
     .catch(()=>{});
 }
+loadLive();
+setInterval(loadLive, 5*60*1000);
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible") loadLive(); });
+addEventListener("hashchange",()=>{ readHash(); render(); });
 let rt; addEventListener("resize",()=>{clearTimeout(rt); rt=setTimeout(()=>{const b=document.getElementById("trendchart"); if(b) drawTrend(b,b.querySelector(".tip"));},150);});
 })();
 </script>
