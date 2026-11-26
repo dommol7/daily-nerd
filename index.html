@@ -213,6 +213,60 @@ footer{margin-top:40px;color:var(--muted);font-size:13px}
 .daytable td{padding:12px 8px}
 section:first-of-type{margin-top:0}
 @media (max-width:520px){.tab{padding:9px 12px;font-size:14px}.daynav-side{margin-left:0;width:100%}.tiles i{width:14px;height:14px}.cal-c{font-size:11px}}
+
+/* v4: sfide, albo, giocatori */
+.challenge{margin-top:14px;background:var(--text);color:var(--bg);border-radius:22px;padding:22px;position:relative;overflow:hidden}
+.challenge .muted,.challenge .ch-foot,.challenge .ch-d{color:color-mix(in oklab,var(--bg) 70%,transparent)}
+.challenge .name{color:var(--bg)}
+.challenge .av{box-shadow:0 0 0 2px var(--text)}
+.ch-head{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start}
+.ch-ico{width:56px;height:56px;border-radius:16px;background:color-mix(in oklab,var(--bg) 14%,transparent);display:flex;align-items:center;justify-content:center;font-size:30px}
+.ch-kick{font-size:13px;font-weight:600;color:var(--sun)}
+.ch-t{font-size:clamp(30px,5vw,42px);margin:2px 0 4px;color:var(--bg)}
+.ch-d{margin:0;font-size:15px;max-width:60ch}
+.ch-left{text-align:center;line-height:1}
+.ch-left .big{display:block;font-size:46px;color:var(--sun)}
+.ch-left small{font-size:12px;color:color-mix(in oklab,var(--bg) 70%,transparent)}
+.ch-rows{display:grid;gap:10px;margin-top:18px}
+.ch-row{display:grid;grid-template-columns:140px 1fr auto;gap:12px;align-items:center}
+.ch-bar{position:relative;height:12px;border-radius:6px;background:color-mix(in oklab,var(--bg) 14%,transparent)}
+.ch-bar i{display:block;height:100%;border-radius:6px;min-width:3px}
+.ch-target{position:absolute;top:-4px;width:2px;height:20px;background:var(--sun);border-radius:1px}
+.ch-v{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ch-foot{font-size:12px;margin:14px 0 0}
+@media (max-width:600px){.ch-head{grid-template-columns:auto 1fr}.ch-left{grid-column:1/-1;text-align:left;display:flex;gap:8px;align-items:baseline}.ch-left .big{display:inline;font-size:28px}.ch-row{grid-template-columns:110px 1fr auto}}
+.trophies{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.trophy{background:linear-gradient(160deg,color-mix(in oklab,var(--sun) 30%,var(--surface)),var(--surface) 60%);border:1px solid color-mix(in oklab,var(--sun) 45%,var(--border));border-radius:18px;padding:18px;text-align:center}
+.trophy.live{background:var(--surface);border-style:dashed;border-color:var(--border)}
+.trophy-cup{font-size:44px;line-height:1}
+.trophy-m{font-family:"Big Shoulders Display","Arial Narrow",sans-serif;font-weight:800;font-size:24px;margin-top:6px}
+.trophy-w{margin:8px 0;display:flex;justify-content:center}
+.trophy-pod{list-style:none;padding:0;margin:8px 0 0;font-size:13px;display:grid;gap:3px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.pcard{font:inherit;color:inherit;text-align:center;background:var(--surface);border:1px solid var(--border);border-top:6px solid var(--pc);border-radius:18px;padding:20px 14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px}
+.pcard:hover{border-color:var(--pc)}
+.av.xl{width:64px;height:64px;font-size:22px;margin:0 0 4px}
+.av.xxl{width:84px;height:84px;font-size:28px;margin:0}
+.pc-name{font-family:"Big Shoulders Display","Arial Narrow",sans-serif;font-weight:800;font-size:28px;line-height:1}
+.pc-sub{font-size:13px;color:var(--text-2)}
+.pc-troph{font-size:13px;white-space:pre}
+.form{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;justify-content:center}
+.card .form{justify-content:flex-start}
+.fpos{width:26px;height:26px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font:700 12px Figtree,sans-serif;background:var(--surface-2);color:var(--muted)}
+.fpos.p1{background:var(--sun);color:#14304a}
+.fpos.p2{background:color-mix(in oklab,var(--text) 22%,var(--surface));color:var(--text)}
+.fpos.p3{background:color-mix(in oklab,#c07a3a 35%,var(--surface));color:var(--text)}
+.phero{background:var(--surface);border:1px solid var(--border);border-left:8px solid var(--pc);border-radius:22px;padding:22px;margin-top:0}
+.phero-id{display:flex;gap:18px;align-items:center}
+.pname{font-size:clamp(44px,8vw,64px);line-height:.9}
+.pstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-top:18px}
+.pstat{background:var(--surface-2);border-radius:12px;padding:10px 12px}
+.pstat .big{font-family:"Big Shoulders Display","Arial Narrow",sans-serif;font-weight:800;font-size:32px;line-height:1}
+.pstat .muted{font-size:12px}
+.ptroph{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-weight:600}
+.g2p{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));margin-top:14px;align-items:start}
+.row[role=button]{cursor:pointer}
+.row[role=button]:hover{background:var(--surface-2)}
 </style>
 </head>
 <body>
@@ -423,7 +477,8 @@ function build(){
 
 /* ---------- render ---------- */
 let M=null, selDay=null, userPicked=false, tab="oggi", period="tutto";
-const TABS=[["oggi","Giornata"],["classifica","Classifica"],["calendario","Calendario"],["giochi","Giochi"],["premi","Premi"]];
+let selPlayer=null;
+const TABS=[["oggi","Giornata"],["classifica","Classifica"],["calendario","Calendario"],["giocatori","Giocatori"],["giochi","Giochi"],["premi","Premi"]];
 const color = p => `var(--p${Math.max(0,M.players.indexOf(p))%5})`;
 const swatch = p => el("span",{class:"dot",style:`background:${color(p)}`});
 function initials(p){ const caps=p.match(/[A-ZÀ-Ý]/g)||[]; return (caps.length>1? caps[0]+caps[1] : p.slice(0,2)).toUpperCase(); }
@@ -437,9 +492,10 @@ function setHash(h){ try{ history.replaceState(null,"","#"+h); }catch(e){} }
 function readHash(){
   const h=decodeURIComponent(location.hash.slice(1));
   if(/^giorno-\d{4}-\d{2}-\d{2}$/.test(h)){ tab="oggi"; selDay=h.slice(7); userPicked=true; }
-  else if(TABS.some(t=>t[0]===h)){ tab=h; }
+  else if(/^giocatore-/.test(h)){ tab="giocatori"; selPlayer=h.slice(10); }
+  else if(TABS.some(t=>t[0]===h)){ tab=h; if(h==="giocatori") selPlayer=null; }
 }
-function goTab(t){ tab=t; setHash(t==="oggi"&&userPicked? "giorno-"+selDay : t); render(); window.scrollTo({top:Math.min(window.scrollY, document.getElementById("app").offsetTop-10)}); }
+function goTab(t){ tab=t; if(t==="giocatori") selPlayer=null; setHash(t==="oggi"&&userPicked? "giorno-"+selDay : t); render(); window.scrollTo({top:Math.min(window.scrollY, document.getElementById("app").offsetTop-10)}); }
 function goDay(d){ selDay=d; userPicked=true; tab="oggi"; setHash("giorno-"+d); render(); }
 
 function render(){
@@ -463,7 +519,8 @@ function render(){
     classifica: ()=>[standingsSection(), trendSection(), h2hSection()],
     calendario: ()=>[el("div",{class:"grid calwrap"}, calendarSection(), weeksSection())],
     giochi: ()=>[gamesSection()],
-    premi: ()=>[awardsSection(), M.bad.length? badSection():null, rulesSection()]
+    giocatori: playersView,
+    premi: ()=>[challengeCard(), ...honorsSection(), awardsSection(), M.bad.length? badSection():null, rulesSection()]
   };
   [].concat(views[tab]()).filter(Boolean).forEach(x=>app.append(x));
   foot();
@@ -562,7 +619,7 @@ function dayView(){
     el("div",{class:"daynav-side"},
       selDay!==last? el("button",{class:"btn",onclick:()=>{userPicked=false; setHash("oggi"); render();}},"Torna a oggi") : null,
       el("button",{class:"btn",onclick:()=>goTab("calendario")},"📅 Scegli un giorno")));
-  return [nav, missingCard(), heroSection(selDay), el("div",{class:"grid gday"}, headlinesCard(selDay), shareCard(selDay)), dayTable(selDay)];
+  return [nav, missingCard(), heroSection(selDay), selDay===M.dayList[M.dayList.length-1]? challengeCard() : null, el("div",{class:"grid gday"}, headlinesCard(selDay), shareCard(selDay)), dayTable(selDay)];
 }
 
 function missingCard(){
@@ -656,7 +713,7 @@ function standingsSection(){
   rank.forEach(p=>{
     const s=st[p], avg=s.daysPlayed? s.points/s.daysPlayed:0;
     const rk=rank.findIndex(q=>st[q].points===s.points)+1;
-    board.append(el("div",{class:"row"+(rk===1?" first":"")},
+    board.append(el("div",{class:"row"+(rk===1?" first":""),role:"button",tabindex:"0",title:"Apri il profilo di "+p,onclick:()=>goPlayer(p),onkeydown:e=>{if(e.key==="Enter")goPlayer(p);}},
       el("div",{class:"rank"}, rk),
       el("div",null,
         el("div",{class:"who-line"}, who(p), period==="tutto"&&M.S[p].winStreak>1? el("span",{class:"pill"},`🔥 ${M.S[p].winStreak}`):null, s.stars? el("span",{class:"pill star"},`⭐ ${s.stars}`):null),
@@ -706,6 +763,133 @@ function weeksSection(){
       el("div",{class:"wk-w"}, cur? "In testa: " : "👑 ", whoList(top), el("b",null,` ${st[top[0]].points} pt`)));
   });
   return el("section",{id:"settimane"}, secHead("I re della settimana","Chi ha fatto più punti da lunedì a domenica"), el("div",{class:"card"}, ...rows));
+}
+
+
+/* ---------- sfide settimanali (ruotano ogni lunedì, si fanno più dure a ogni giro) ---------- */
+const CH_EPOCH="2026-11-09";
+const fhCount=(r,keys)=>r? keys.reduce((a,k)=>a+((r.extra.counts||{})[k]||0),0) : 0;
+const CHALLENGES=[
+  {id:"raro", ico:"🟪", t:"Caccia al raro", d:"Più paesi 🟪 sfuggenti e 🟧 trailblazer a Farhike", agg:"sum", base:3, step:1, u:"rari",
+   f:(pd,p)=>fhCount(pd.games["Farhike"].res[p],["🟪","🟧"])},
+  {id:"cecchino", ico:"🎯", t:"Cecchino", d:"Più città azzeccate al primo tentativo 🟩 a City Angle", agg:"sum", base:8, step:2, u:"🟩",
+   f:(pd,p)=>fhCount(pd.games["City Angle"].res[p],["🟩"])},
+  {id:"tick", ico:"✅", t:"Navigatore perfetto", d:"Più tappe perfette ✅ a Travle", agg:"sum", base:25, step:5, u:"✅",
+   f:(pd,p)=>fhCount(pd.games["Travle"].res[p],["✅"])},
+  {id:"km", ico:"🏔️", t:"Maratoneta", d:"Più km totali a Farhike in settimana", agg:"sum", base:1300, step:200, u:"km",
+   f:(pd,p)=>{ const r=pd.games["Farhike"].res[p]; return r? Math.round(r.extra.km):0; }},
+  {id:"stelle", ico:"⭐", t:"Pioggia di stelle", d:"Più partite perfette ⭐ in tutti e tre i giochi", agg:"sum", base:2, step:1, u:"⭐",
+   f:(pd,p)=>pd.stars[p]},
+  {id:"pulito", ico:"🛣️", t:"Strada pulita", d:"Più partite di Travle senza nemmeno un 🟥", agg:"sum", base:4, step:1, max:7, u:"partite",
+   f:(pd,p)=>{ const r=pd.games["Travle"].res[p]; return r&&r.extra.ok&&!((r.extra.counts||{})["🟥"])?1:0; }},
+  {id:"trovati", ico:"🧭", t:"Nessun buco", d:"Più paesi trovati a Farhike (tutto tranne ⬛)", agg:"sum", base:22, step:3, max:35, u:"paesi",
+   f:(pd,p)=>{ const r=pd.games["Farhike"].res[p]; if(!r) return 0; const a=Object.values(r.extra.counts||{}).reduce((x,y)=>x+y,0); return a-((r.extra.counts||{})["⬛"]||0); }},
+  {id:"costanza", ico:"📅", t:"Costanza", d:"Più giorni con tutti e tre i giochi giocati", agg:"sum", base:6, step:1, max:7, u:"giorni",
+   f:(pd,p)=>pd.played[p]===3?1:0},
+  {id:"giornata", ico:"🚀", t:"Giornata da urlo", d:"Il miglior totale di punti in una singola giornata", agg:"max", base:13, step:1, max:18, u:"pt",
+   f:(pd,p)=>pd.played[p]?pd.pts[p]:0},
+  {id:"vittorie", ico:"🥇", t:"Pigliatutto", d:"Più giochi vinti (primo posto nel singolo gioco)", agg:"sum", base:6, step:1, u:"vittorie",
+   f:(pd,p)=>GAMES.filter(g=>pd.games[g].ranks[p]===1&&pd.games[g].order.length>1).length},
+  {id:"citta", ico:"🏙️", t:"Re delle città", d:"Il miglior punteggio singolo a City Angle", agg:"max", base:5000, step:250, u:"pts",
+   f:(pd,p)=>{ const r=pd.games["City Angle"].res[p]; return r? r.extra.pts:0; }},
+];
+function weekIndex(ws){ return Math.round((dParts(ws)-dParts(CH_EPOCH))/(7*864e5)); }
+function challengeFor(ws){
+  const i=Math.max(0,weekIndex(ws)), c=CHALLENGES[i%CHALLENGES.length], level=Math.floor(i/CHALLENGES.length)+1;
+  let target=c.base+c.step*(level-1); if(c.max) target=Math.min(target,c.max);
+  return Object.assign({},c,{level,target,ws});
+}
+function challengeResult(ws){
+  const ch=challengeFor(ws), days=M.dayList.filter(d=>weekStart(d)===ws), val={};
+  M.players.forEach(p=>{ const v=days.map(d=>ch.f(M.perDay[d],p)); val[p]= v.length? (ch.agg==="max"? Math.max(...v) : v.reduce((a,b)=>a+b,0)) : 0; });
+  const rank=[...M.players].sort((a,b)=>val[b]-val[a]);
+  const best=val[rank[0]]; const winners= best>0? rank.filter(p=>val[p]===best) : [];
+  return {ch, days, val, rank, winners, done: ws<weekStart(todayISO())};
+}
+function allChallenges(){ const ws=[...new Set(M.dayList.map(weekStart))].sort(); return ws.map(challengeResult); }
+
+function challengeCard(compact){
+  const ws=weekStart(todayISO()), R=challengeResult(ws), ch=R.ch;
+  const end=addDays(ws,6); const left=Math.max(0, Math.round((dParts(end)-dParts(todayISO()))/864e5));
+  const fmtV=v=>fmt(v)+" "+ch.u;
+  const max=Math.max(ch.target, ...M.players.map(p=>R.val[p]), 1);
+  const rows=R.rank.map(p=>el("div",{class:"ch-row"}, who(p),
+    el("div",{class:"ch-bar"}, el("i",{style:`width:${(R.val[p]/max*100).toFixed(1)}%;background:${color(p)}`}), el("b",{class:"ch-target",style:`left:${(ch.target/max*100).toFixed(1)}%`,title:"Obiettivo"})),
+    el("span",{class:"ch-v"}, fmtV(R.val[p]), R.val[p]>=ch.target? " ✅":"")));
+  return el("section",{class:"challenge",id:"sfida"},
+    el("div",{class:"ch-head"},
+      el("span",{class:"ch-ico","aria-hidden":"true"},ch.ico),
+      el("div",null, el("div",{class:"ch-kick"},`Sfida della settimana · livello ${ch.level}`), el("h2",{class:"ch-t"},ch.t), el("p",{class:"ch-d"},ch.d+`. Obiettivo: ${fmtV(ch.target)}.`)),
+      el("div",{class:"ch-left"}, el("span",{class:"big"}, left), el("small",null, left===1?"giorno alla fine":"giorni alla fine"))),
+    el("div",{class:"ch-rows"}, ...rows),
+    el("p",{class:"ch-foot"}, "Chi vince la sfida prende un 🎯 nell'albo d'oro. Ogni lunedì arriva una sfida nuova, e a ogni giro le sfide tornano più difficili."));
+}
+
+/* ---------- albo d'oro ---------- */
+function monthsList(){ return [...new Set(M.dayList.map(d=>d.slice(0,7)))].sort(); }
+const MESIL=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+function monthResult(ym){ const days=M.dayList.filter(d=>d.slice(0,7)===ym); const st=periodStats(days); const rank=[...M.players].sort((a,b)=>st[b].points-st[a].points||st[b].dayWins-st[a].dayWins); const top=rank.filter(p=>st[p].points===st[rank[0]].points);
+  return {ym, days, st, rank, top, done: ym<todayISO().slice(0,7)}; }
+function weekKings(){ const ws=[...new Set(M.dayList.map(weekStart))].sort(); return ws.map(w=>{ const st=periodStats(M.dayList.filter(d=>weekStart(d)===w)); const r=[...M.players].sort((a,b)=>st[b].points-st[a].points); return {ws:w, top:r.filter(p=>st[p].points===st[r[0]].points), done:w<weekStart(todayISO())}; }); }
+function trophies(p){
+  return { months: monthsList().map(monthResult).filter(m=>m.done&&m.top.includes(p)).length,
+           weeks: weekKings().filter(w=>w.done&&w.top.includes(p)).length,
+           challenges: allChallenges().filter(r=>r.done&&r.winners.includes(p)).length };
+}
+function honorsSection(){
+  const months=monthsList().map(monthResult).reverse();
+  const md=["🥇","🥈","🥉"];
+  const mcards=months.map(m=>{ const [y,mm]=m.ym.split("-").map(Number);
+    return el("div",{class:"trophy"+(m.done?"":" live")},
+      el("div",{class:"trophy-cup","aria-hidden":"true"}, m.done?"🏆":"⏳"),
+      el("div",{class:"trophy-m"}, el("span",{style:"text-transform:capitalize"},MESIL[mm-1])," "+y), m.done? null : el("div",{class:"muted",style:"font-size:13px"},"in corso"),
+      el("div",{class:"trophy-w"}, whoList(m.top)),
+      el("ol",{class:"trophy-pod"}, ...m.rank.slice(0,3).map((p,i)=>el("li",null, md[i]+" "+p+" ", el("span",{class:"muted"}, m.st[p].points+" pt"))))); });
+  const ch=allChallenges().reverse();
+  const chRows=ch.map(r=>el("div",{class:"wk"},
+    el("div",null, el("div",{class:"wk-d"}, `${r.ch.ico} ${r.ch.t}`, el("span",{class:"muted",style:"font-weight:500"},` · livello ${r.ch.level}`)), el("div",{class:"muted",style:"font-size:12px"}, `${dShort(r.ch.ws)} – ${dShort(addDays(r.ch.ws,6))}`+(r.done?"":" (in corso)"))),
+    el("div",{class:"wk-w"}, r.winners.length? [r.done?"🎯 ":"In testa: ", whoList(r.winners), el("b",null,` ${fmt(r.val[r.winners[0]])} ${r.ch.u}`)] : el("span",{class:"muted"},"ancora nessuno"))));
+  return [el("section",{id:"albo"}, secHead("Albo d'oro","Il trofeo del mese va a chi fa più punti nel mese"), el("div",{class:"trophies"}, ...mcards)),
+          el("section",{id:"archivio-sfide"}, secHead("Le sfide della settimana","Una sfida nuova ogni lunedì"), el("div",{class:"card"}, ...chRows))];
+}
+
+/* ---------- giocatori ---------- */
+function playersView(){
+  if(selPlayer && M.players.includes(selPlayer)) return profileView(selPlayer);
+  const cards=M.ranking.map((p,i)=>{ const s=M.S[p], t=trophies(p);
+    return el("button",{class:"pcard",onclick:()=>goPlayer(p),style:`--pc:${color(p)}`},
+      avatar(p,"xl"), el("div",{class:"pc-name"},p), el("div",{class:"pc-sub"}, `${i+1}° in classifica, ${s.points} pt`),
+      el("div",{class:"pc-troph"}, `🏆 ${t.months}  👑 ${t.weeks}  🎯 ${t.challenges}  ⭐ ${s.stars}`),
+      formStrip(p,7)); });
+  return [el("section",{id:"giocatori"}, secHead("Giocatori","Tocca un giocatore per vedere statistiche, record e forma"), el("div",{class:"pgrid"}, ...cards))];
+}
+function goPlayer(p){ selPlayer=p; tab="giocatori"; setHash("giocatore-"+p); render(); window.scrollTo({top:document.getElementById("app").offsetTop-10}); }
+function dayPos(d,p){ const pd=M.perDay[d]; if(!pd.played[p]) return null; return M.players.filter(q=>pd.played[q]&&pd.pts[q]>pd.pts[p]).length+1; }
+function formStrip(p,n){
+  const days=M.dayList.slice(-n);
+  return el("div",{class:"form",role:"img","aria-label":"Ultime giornate: "+days.map(d=>{const k=dayPos(d,p); return k? k+"°":"assente";}).join(", ")},
+    ...days.map(d=>{ const k=dayPos(d,p); return el("span",{class:"fpos p"+(k||0),title:`${dShort(d)}: ${k? k+"° posto, "+M.perDay[d].pts[p]+" pt":"non ha giocato"}`}, k? (k===1?"👑":k) : "–"); }));
+}
+function profileView(p){
+  const s=M.S[p], t=trophies(p), rk=M.ranking.indexOf(p)+1;
+  const back=el("button",{class:"btn",onclick:()=>{selPlayer=null; setHash("giocatori"); render();}},"← Tutti i giocatori");
+  const stat=(v,l)=>el("div",{class:"pstat"}, el("div",{class:"big"},v), el("div",{class:"muted"},l));
+  const head=el("section",{class:"phero",style:`--pc:${color(p)}`},
+    el("div",{class:"phero-id"}, avatar(p,"xxl"), el("div",null, el("h2",{class:"pname"},p), el("p",{class:"muted",style:"margin:4px 0 0"},`${rk}° in classifica generale`))),
+    el("div",{class:"pstats"}, stat(s.points,"punti"), stat(s.dayWins,"giornate vinte"), stat(s.gameWins,"giochi vinti"), stat(s.stars,"stelle ⭐"), stat(`${s.daysPlayed}/${M.dayList.length}`,"presenze"), stat(s.bestWinStreak,"serie record")),
+    el("div",{class:"ptroph"}, el("span",null,`🏆 ${t.months} ${t.months===1?"trofeo del mese":"trofei del mese"}`), el("span",null,`👑 ${t.weeks} ${t.weeks===1?"settimana vinta":"settimane vinte"}`), el("span",null,`🎯 ${t.challenges} ${t.challenges===1?"sfida vinta":"sfide vinte"}`)));
+  const form=el("div",{class:"card"}, el("h3",null,"Forma, ultime 14 giornate"), formStrip(p,14), el("p",{class:"muted",style:"font-size:12px;margin:8px 0 0"},"Posizione in classifica di ogni giornata, la più recente a destra."));
+  const recs=el("div",{class:"card"}, el("h3",null,"Record personali"), ...GAMES.map(g=>{ const pg=s.perGame[g];
+    const avg=pg.n? pg.sum/pg.n : null;
+    const avgShow= avg==null? "—" : g==="Farhike"? fmt(avg,0)+" km" : g==="City Angle"? fmt(avg,0)+" pts" : "+"+fmt(avg,1);
+    return el("div",{class:"stat-row"}, el("span",null,GAME_ICON[g]+" "+g), el("span",null, el("b",null, pg.bestShow||"—"), el("span",{class:"muted"}, pg.bestDay? ` il ${dShort(pg.bestDay)} · media ${avgShow}`:""))); }));
+  const dists=el("div",{class:"card"}, el("h3",null,"Com'è andata tappa per tappa"), ...GAMES.map(g=>{ const pg=s.perGame[g]; const tot=CATS[g].reduce((a,c)=>a+(pg.cats[c[0]]||0),0);
+    return el("div",{style:"margin:10px 0"}, el("div",{style:"display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px"}, el("span",null,GAME_ICON[g]+" "+g), el("span",{class:"muted"}, `${pg.points} pt · ${pg.wins} 🥇 · ${pg.stars} ⭐`)),
+      tot? el("div",{class:"dist",style:"max-width:none"}, ...CATS[g].filter(c=>pg.cats[c[0]]).map(c=>el("i",{style:`flex:${pg.cats[c[0]]};background:${c[2]}`,title:`${c[0]} ${c[1]}: ${pg.cats[c[0]]}`}))) : el("span",{class:"muted"},"nessun dato"),
+      tot? el("div",{class:"legend-mini",style:"margin-top:6px"}, ...CATS[g].filter(c=>pg.cats[c[0]]).map(c=>el("span",null, el("b",{style:`background:${c[2]}`}), `${c[1]} ${pg.cats[c[0]]}`))) : null); }));
+  const h2h=el("div",{class:"card"}, el("h3",null,"Testa a testa"), ...M.players.filter(q=>q!==p).map(q=>{ const w=M.h2h[p][q], l=M.h2h[q][p];
+    return el("div",{class:"stat-row"}, who(q), el("span",null, el("b",{style:w>l?"color:var(--route)":""}, `${w} – ${l}`), el("span",{class:"muted"}, w>l?" in vantaggio":w<l?" in svantaggio":" pari"))); }));
+  return [el("div",{style:"margin-bottom:14px"},back), head, el("div",{class:"grid g2p"}, form, recs, dists, h2h)];
 }
 
 function shareText(d){
