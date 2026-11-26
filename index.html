@@ -9,7 +9,7 @@
 <style>
 :root{
   color-scheme: light;
-  --bg:#f3f4f6; --surface:#ffffff; --surface-2:#eef0f3; --border:rgba(14,17,22,.08);
+  --bg:#eef1fc; --surface:#ffffff; --surface-2:#eff1f8; --border:rgba(14,17,22,.08);
   --text:#0e1116; --text-2:#525a66; --muted:#8a919c;
   --accent:#2e5bff; --accent-2:#7b5cff; --route:#2e5bff; --gold:#e0a100; --sun:#ffc531;
   --sea:#0e1116; --snow:#ffffff; --contour:transparent; --grid:rgba(14,17,22,.08);
@@ -25,7 +25,7 @@
   --text:#f3f5f8; --text-2:#aab1bc; --muted:#7c8491; --accent:#5b7cff; --route:#5b7cff; --grid:rgba(255,255,255,.08);
   --p0:#3987e5; --p1:#d95926; --p2:#199e70; --p3:#c98500; --p4:#d55181; }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{margin:0;background:radial-gradient(1200px 600px at 85% -10%,color-mix(in oklab,var(--accent-2) 22%,transparent),transparent 70%),radial-gradient(900px 500px at -10% 10%,color-mix(in oklab,var(--accent) 16%,transparent),transparent 70%),var(--bg);background-attachment:fixed;min-height:100vh;color:var(--text);font:16px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 .wrap{max-width:1160px;margin:0 auto;padding:32px 20px 80px}
 h1,h2,h3,.big,.hero-name,.rank,.score,.dnum,.pname,.pc-name,.trophy-m,.ch-t,.pstat .big{font-family:var(--display);letter-spacing:-.035em}
 h1{font-size:clamp(44px,8vw,84px);line-height:1;font-weight:800;margin:0}
